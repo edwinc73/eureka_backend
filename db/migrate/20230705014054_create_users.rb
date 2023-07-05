@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.integer :age
       t.float :weight
       t.integer :height
-      t.boolean :male
+      t.string :gender
 
       t.timestamps
     end
