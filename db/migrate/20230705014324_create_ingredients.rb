@@ -6,10 +6,10 @@ class CreateIngredients < ActiveRecord::Migration[7.0]
       t.integer :calories
       t.integer :portion_size
       t.string :category
-      t.integer :fats
-      t.integer :proteins
-      t.integer :carbs
-      t.integer :fibre
+      t.float :fats
+      t.float :proteins
+      t.float :carbs
+      t.float :fibre
       t.integer :sodium
 
       t.timestamps
