@@ -5,7 +5,6 @@ class CreateGoals < ActiveRecord::Migration[7.0]
       t.integer :calorie_goal
       t.integer :current_calorie
       t.integer :nutrients
-      t.datetime :deadline
 
       t.timestamps
     end
