@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :recipes, only: %i[show create index update] do
         resources :favourite_recipes, only: :create
         resources :reviews, only: %i[create index]
+        post 'upload_img', to: "recipes#upload_img"
       end
       resources :meals, only: %i[show create index]
       resources :goals, only: %i[show create index]
