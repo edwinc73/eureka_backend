@@ -60,7 +60,8 @@ meats = [
   { name: "Elk", calories: 176, portion_size: 100, fats: 4, proteins: 34, carbs: 0, fiber: 0, sodium: 49 },
   { name: "Buffalo", calories: 109, portion_size: 100, fats: 1.8, proteins: 21, carbs: 0, fiber: 0, sodium: 54 },
   { name: "Wild boar", calories: 155, portion_size: 100, fats: 5, proteins: 28, carbs: 0, fiber: 0, sodium: 54 },
-  { name: "Ostrich", calories: 116, portion_size: 100, fats: 3, proteins: 22, carbs: 0, fiber: 0, sodium: 49 }
+  { name: "Ostrich", calories: 116, portion_size: 100, fats: 3, proteins: 22, carbs: 0, fiber: 0, sodium: 49 },
+  { name:"Egg", calories: 142, portion_size: 100, fats: 9.9, protein: 12.2, carbs: 1.4, fiber: 0, sodium: 136}
 ]
 
 meats.each do |meat|
@@ -162,7 +163,8 @@ grains = [
   { name: "Farro", calories: 337, portion_size: 100, fats: 1.8, proteins: 11, carbs: 73.5, fiber: 7.7, sodium: 4 },
   { name: "Triticale", calories: 339, portion_size: 100, fats: 1.2, proteins: 13.1, carbs: 73.6, fiber: 8.6, sodium: 1 },
   { name: "Kamut", calories: 337, portion_size: 100, fats: 2, proteins: 14.3, carbs: 71.5, fiber: 10.7, sodium: 2 },
-  { name: "Sorghum flour", calories: 338, portion_size: 100, fats: 3.3, proteins: 10.6, carbs: 72.1, fiber: 6.3, sodium: 1 }
+  { name: "Sorghum flour", calories: 338, portion_size: 100, fats: 3.3, proteins: 10.6, carbs: 72.1, fiber: 6.3, sodium: 1 },
+  { name: "Pasta cooked", calories: 131, portion_size: 100, fats: 0.5, proteins: 7, carbs: 30 ,fiber: 3, sodium: 1}
 ]
 
 grains.each do |grain|
@@ -329,6 +331,43 @@ recipes.each do |recipe|
   )
 end
 
+# add ingredients into "Pasta cooked"
+pasta_carbonara = Recipe.find_by(name: "Pasta Carbonara")
+pasta = Ingredient.find_by(name: "Pasta cooked")
+bacon = Ingredient.find_by(name: "Bacon")
+egg = Ingredient.find_by(name: "Egg")
+cheese = Ingredient.find_by(name: "Cheese")
+olive_oil = Ingredient.find_by(name: "Olive oil")
+Prep.create!(
+  portion: 1.0,
+  ingredient: pasta,
+  recipe: pasta_carbonara
+)
+
+Prep.create!(
+  portion: 0.5,
+  ingredient: bacon,
+  recipe: pasta_carbonara
+)
+
+Prep.create!(
+  portion: 0.6,
+  ingredient: egg,
+  recipe: pasta_carbonara
+)
+
+Prep.create!(
+  portion: 0.3,
+  ingredient: cheese,
+  recipe: pasta_carbonara
+)
+
+Prep.create!(
+  portion: 0.2,
+  ingredient: olive_oil,
+  recipe: pasta_carbonara
+)
+
 20.times do
   FavouriteRecipe.create!(user: User.all.sample, recipe: Recipe.all.sample)
 end
@@ -371,3 +410,6 @@ end
     content: content
   )
 end
+
+Badge.create!(name: "straving")
+Achievement.create!(user: User.last, badge: Badge.first)

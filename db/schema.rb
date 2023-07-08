@@ -104,7 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
   end
 
   create_table "preps", force: :cascade do |t|
-    t.integer "portion"
+    t.float "portion"
     t.bigint "ingredient_id", null: false
     t.bigint "recipe_id", null: false
     t.datetime "created_at", null: false
