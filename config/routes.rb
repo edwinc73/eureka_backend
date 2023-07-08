@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      post 'login', to: 'sessions#login', as: :login
       resources :recipes, only: %i[show create index update] do
         resources :favourite_recipes, only: :create
         resources :reviews, only: %i[create index]
