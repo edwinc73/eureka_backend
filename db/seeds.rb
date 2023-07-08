@@ -1,3 +1,5 @@
+require 'faker'
+
 oils = [
   { name: "Olive oil", calories: 884, portion_size: 100, fats: 100, proteins: 0, carbs: 0, fiber: 0, sodium: 2 },
   { name: "Coconut oil", calories: 862, portion_size: 100, fats: 100, proteins: 0, carbs: 0, fiber: 0, sodium: 2 },
@@ -208,5 +210,20 @@ condiments.each do |condiment|
     fiber: condiment[:fiber],
     sodium: condiment[:sodium],
     category: "Condiments"
+  )
+end
+
+30.times do
+  username = Faker::Internet.username(specifier: 5..18)
+  age = rand(15..60)
+  weight = rand(35..100)
+  height = rand(150..200)
+  gender = ["m", "f"].sample
+  User.create!(
+    username: username,
+    age: age,
+    weight: weight,
+    height: height,
+    gender: gender
   )
 end
