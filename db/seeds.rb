@@ -226,38 +226,38 @@ end
     gender: gender
   )
 end
-
-Recipe.create!(
-  name: "Pasta Carbonara",
-  description: "Classic Italian pasta dish with creamy sauce and bacon",
-  instructions: "1. Cook the pasta in a large pot of salted boiling water until al dente.\n2. In a skillet, cook the bacon until crispy. Remove from heat and set aside.\n3. In a bowl, whisk together the eggs, grated cheese, and black pepper.\n4. Drain the pasta, reserving a small amount of the cooking water.\n5. While the pasta is still hot, add it to the skillet with the cooked bacon. Toss to combine.\n6. Gradually pour the egg mixture over the hot pasta, stirring quickly to coat the pasta evenly.\n7. If the sauce is too thick, add a small amount of the reserved cooking water to thin it out.\n8. Serve immediately with extra grated cheese on top.",
-  total_calories: 700,
-  fat: 40,
-  protein: 30,
-  carbs: 60 ,
-  category: "Main Dish"
-)
-
-Recipe.create!(
-  name: "Caprese Salad",
-  description: "Refreshing Italian salad with tomatoes, mozzarella, and basil",
-  instructions: "1. Slice the tomatoes and mozzarella into thick rounds.\n2. Arrange the tomato and mozzarella slices on a platter, alternating them.\n3. Sprinkle fresh basil leaves over the tomato and mozzarella slices.\n4. Drizzle with olive oil and balsamic vinegar.\n5. Season with salt and pepper to taste.\n6. Let the salad sit for a few minutes to allow the flavors to meld.\n7. Serve as a side dish or as a light lunch.",
-  total_calories: 250,
-  fat: 15, protein: 15, carbs: 10,
-  category: "Salad"
-)
-
-Recipe.create!(
-  name: "Chicken Parmesan",
-  description: "Breaded chicken cutlets topped with marinara sauce and cheese",
-  instructions: "1. Preheat the oven to 375°F (190°C).\n2. In a shallow dish, mix together breadcrumbs, grated Parmesan cheese, and Italian seasoning.\n3. Dip chicken cutlets in beaten eggs, then coat them in the breadcrumb mixture.\n4. Heat oil in a large skillet over medium heat. Cook the breaded chicken cutlets until golden brown on both sides.\n5. Transfer the cooked chicken cutlets to a baking dish.\n6. Spoon marinara sauce over each cutlet and sprinkle with shredded mozzarella cheese.\n7. Bake in the preheated oven for about 20 minutes or until the cheese is melted and bubbly.\n8. Serve hot with cooked pasta or a side salad.",
-  total_calories: 450,
-  fat: 20,
-  protein: 35,
-  carbs: 30,
-  category: "Main Dish")
-
-  Recipe.create!(
+recipes = [
+  {
+    name: "Pasta Carbonara",
+    description: "Classic Italian pasta dish with creamy sauce and bacon",
+    instructions: "1. Cook the pasta in a large pot of salted boiling water until al dente.\n2. In a skillet, cook the bacon until crispy. Remove from heat and set aside.\n3. In a bowl, whisk together the eggs, grated cheese, and black pepper.\n4. Drain the pasta, reserving a small amount of the cooking water.\n5. While the pasta is still hot, add it to the skillet with the cooked bacon. Toss to combine.\n6. Gradually pour the egg mixture over the hot pasta, stirring quickly to coat the pasta evenly.\n7. If the sauce is too thick, add a small amount of the reserved cooking water to thin it out.\n8. Serve immediately with extra grated cheese on top.",
+    total_calories: 700,
+    fat: 40,
+    protein: 30,
+    carbs: 60 ,
+    category: "Main Dish"
+  },
+  {
+    name: "Caprese Salad",
+    description: "Refreshing Italian salad with tomatoes, mozzarella, and basil",
+    instructions: "1. Slice the tomatoes and mozzarella into thick rounds.\n2. Arrange the tomato and mozzarella slices on a platter, alternating them.\n3. Sprinkle fresh basil leaves over the tomato and mozzarella slices.\n4. Drizzle with olive oil and balsamic vinegar.\n5. Season with salt and pepper to taste.\n6. Let the salad sit for a few minutes to allow the flavors to meld.\n7. Serve as a side dish or as a light lunch.",
+    total_calories: 250,
+    fat: 15,
+    protein: 15,
+    carbs: 10,
+    category: "Salad"
+  },
+  {
+    name: "Chicken Parmesan",
+    description: "Breaded chicken cutlets topped with marinara sauce and cheese",
+    instructions: "1. Preheat the oven to 375°F (190°C).\n2. In a shallow dish, mix together breadcrumbs, grated Parmesan cheese, and Italian seasoning.\n3. Dip chicken cutlets in beaten eggs, then coat them in the breadcrumb mixture.\n4. Heat oil in a large skillet over medium heat. Cook the breaded chicken cutlets until golden brown on both sides.\n5. Transfer the cooked chicken cutlets to a baking dish.\n6. Spoon marinara sauce over each cutlet and sprinkle with shredded mozzarella cheese.\n7. Bake in the preheated oven for about 20 minutes or until the cheese is melted and bubbly.\n8. Serve hot with cooked pasta or a side salad.",
+    total_calories: 450,
+    fat: 20,
+    protein: 35,
+    carbs: 30,
+    category: "Main Dish"
+  },
+  {
     name: "Banana Bread",
     description: "Moist and delicious homemade banana bread",
     instructions: "1. Preheat the oven to 350°F (175°C). Grease a loaf pan.\n2. In a large bowl, cream together butter and sugar until light and fluffy.\n3. Beat in eggs one at a time, then stir in mashed bananas and vanilla extract.\n4. In a separate bowl, combine flour, baking soda, and salt.\n5. Gradually add the dry ingredients to the banana mixture and mix until just combined.\n6. Pour the batter into the prepared loaf pan.\n7. Bake for 60 to 65 minutes, or until a toothpick inserted into the center comes out clean.\n8. Allow the banana bread to cool in the pan for 10 minutes, then transfer it to a wire rack to cool completely.\n9. Slice and serve.",
@@ -266,58 +266,68 @@ Recipe.create!(
     protein: 3,
     carbs: 30,
     category: "Dessert"
+  },
+  {
+    name: "Grilled Salmon with Lemon Butter",
+    description: "Flavorful grilled salmon fillets with a tangy lemon butter sauce",
+    instructions: "1. Preheat the grill to medium-high heat.\n2. Season salmon fillets with salt, pepper, and a drizzle of olive oil.\n3. Place the salmon fillets on the preheated grill and cook for about 4-5 minutes per side, or until the fish is cooked through.\n4. In a small saucepan, melt butter over medium heat. Stir in fresh lemon juice, lemon zest, and minced garlic. Cook for 1-2 minutes.\n5. Remove the salmon from the grill and transfer to a serving plate.\n6. Drizzle the lemon butter sauce over the grilled salmon fillets.\n7. Garnish with fresh parsley and lemon slices.\n8. Serve hot with your choice of side dishes.",
+    total_calories: 350,
+    fat: 25,
+    protein: 30,
+    carbs: 2,
+    category: "Main Dish"
+  },
+  {
+    name: "Mediterranean Quinoa Salad",
+    description: "Healthy and vibrant salad with quinoa, fresh vegetables, and feta cheese",
+    instructions: "1. Cook quinoa according to package instructions. Let it cool.\n2. In a large bowl, combine cooked quinoa, diced cucumbers, cherry tomatoes, chopped red onion, sliced olives, and crumbled feta cheese.\n3. In a small bowl, whisk together olive oil, lemon juice, minced garlic, dried oregano, salt, and pepper to make the dressing.\n4. Pour the dressing over the quinoa and vegetable mixture. Toss to combine.\n5. Taste and adjust the seasoning if needed.\n6. Chill the salad in the refrigerator for at least 30 minutes before serving.\n7. Garnish with fresh parsley and serve as a side dish or a light meal.",
+    total_calories: 250,
+    fat: 10,
+    protein: 8,
+    carbs: 35,
+    category: "Salad"
+  },
+  {
+    name: "Beef Stir-Fry",
+    description: "Quick and flavorful stir-fried beef with vegetables",
+    instructions: "1. In a small bowl, whisk together soy sauce, oyster sauce, sesame oil, and cornstarch. Set aside.\n2. Heat vegetable oil in a wok or large skillet over high heat.\n3. Add thinly sliced beef and stir-fry until browned and cooked to your desired doneness. Remove the beef from the pan and set aside.\n4. In the same pan, add sliced bell peppers, broccoli florets, and thinly sliced carrots. Stir-fry for a few minutes until the vegetables are crisp-tender.\n5. Return the beef to the pan and pour the sauce mixture over the beef and vegetables.\n6. Stir-fry for an additional 1-2 minutes until the sauce thickens and coats the ingredients.\n7. Remove from heat and garnish with chopped green onions.\n8. Serve hot with steamed rice or noodles.",
+    total_calories: 400,
+    fat: 15,
+    protein: 25,
+    carbs: 40,
+    category: "Main Dish"
+  },
+  {
+    name: "Roasted Vegetable Frittata",
+    description: "Hearty and nutritious baked egg dish with roasted vegetables",
+    instructions: "1. Preheat the oven to 375°F (190°C).\n2. Toss diced vegetables (such as bell peppers, zucchini, mushrooms, and onions) with olive oil, salt, and pepper.\n3. Spread the vegetables in a single layer on a baking sheet and roast for about 20-25 minutes, or until they are tender and slightly caramelized.\n4. In a large bowl, whisk together eggs, milk, grated cheese, salt, and pepper.\n5. Grease a baking dish and spread the roasted vegetables evenly on the bottom.\n6. Pour the egg mixture over the vegetables, ensuring they are well covered.\n7. Bake in the preheated oven for 25-30 minutes, or until the frittata is set in the center and lightly golden on top.\n8. Let it cool for a few minutes, then slice into wedges and serve.",
+    total_calories: 300,
+    fat: 20,
+    protein: 15,
+    carbs: 15,
+    category: "Breakfast"
+  },
+  {
+  name: "Roasted Vegetable Frittata",
+  description: "Hearty and nutritious baked egg dish with roasted vegetables",
+  instructions: "1. Preheat the oven to 375°F (190°C).\n2. Toss diced vegetables (such as bell peppers, zucchini, mushrooms, and onions) with olive oil, salt, and pepper.\n3. Spread the vegetables in a single layer on a baking sheet and roast for about 20-25 minutes, or until they are tender and slightly caramelized.\n4. In a large bowl, whisk together eggs, milk, grated cheese, salt, and pepper.\n5. Grease a baking dish and spread the roasted vegetables evenly on the bottom.\n6. Pour the egg mixture over the vegetables, ensuring they are well covered.\n7. Bake in the preheated oven for 25-30 minutes, or until the frittata is set in the center and lightly golden on top.\n8. Let it cool for a few minutes, then slice into wedges and serve.",
+  total_calories: 300,
+  category: "Breakfast"
+  }
+]
+
+recipes.each do |recipe|
+  Recipe.create!(
+    name: recipe[:name],
+    description: recipe[:description],
+    instructions: recipe[:instructions],
+    total_calories: recipe[:total_calories],
+    fat: recipe[:fat],
+    protein: recipe[:protein],
+    carbs: recipe[:carbs],
+    category: recipe[:category]
   )
-
-Recipe.create!(
-  name: "Grilled Salmon with Lemon Butter",
-  description: "Flavorful grilled salmon fillets with a tangy lemon butter sauce",
-  instructions: "1. Preheat the grill to medium-high heat.\n2. Season salmon fillets with salt, pepper, and a drizzle of olive oil.\n3. Place the salmon fillets on the preheated grill and cook for about 4-5 minutes per side, or until the fish is cooked through.\n4. In a small saucepan, melt butter over medium heat. Stir in fresh lemon juice, lemon zest, and minced garlic. Cook for 1-2 minutes.\n5. Remove the salmon from the grill and transfer to a serving plate.\n6. Drizzle the lemon butter sauce over the grilled salmon fillets.\n7. Garnish with fresh parsley and lemon slices.\n8. Serve hot with your choice of side dishes.",
-  total_calories: 350,
-  fat: 25,
-  protein: 30,
-  carbs: 2,
-  category: "Main Dish" )
-
-Recipe.create!(
-  name: "Mediterranean Quinoa Salad",
-  description: "Healthy and vibrant salad with quinoa, fresh vegetables, and feta cheese",
-  instructions: "1. Cook quinoa according to package instructions. Let it cool.\n2. In a large bowl, combine cooked quinoa, diced cucumbers, cherry tomatoes, chopped red onion, sliced olives, and crumbled feta cheese.\n3. In a small bowl, whisk together olive oil, lemon juice, minced garlic, dried oregano, salt, and pepper to make the dressing.\n4. Pour the dressing over the quinoa and vegetable mixture. Toss to combine.\n5. Taste and adjust the seasoning if needed.\n6. Chill the salad in the refrigerator for at least 30 minutes before serving.\n7. Garnish with fresh parsley and serve as a side dish or a light meal.",
-  total_calories: 250,
-  fat: 10,
-  protein: 8,
-  carbs: 35,
-  category: "Salad"
-)
-
-Recipe.create!(
-  name: "Beef Stir-Fry",
-  description: "Quick and flavorful stir-fried beef with vegetables",
-  instructions: "1. In a small bowl, whisk together soy sauce, oyster sauce, sesame oil, and cornstarch. Set aside.\n2. Heat vegetable oil in a wok or large skillet over high heat.\n3. Add thinly sliced beef and stir-fry until browned and cooked to your desired doneness. Remove the beef from the pan and set aside.\n4. In the same pan, add sliced bell peppers, broccoli florets, and thinly sliced carrots. Stir-fry for a few minutes until the vegetables are crisp-tender.\n5. Return the beef to the pan and pour the sauce mixture over the beef and vegetables.\n6. Stir-fry for an additional 1-2 minutes until the sauce thickens and coats the ingredients.\n7. Remove from heat and garnish with chopped green onions.\n8. Serve hot with steamed rice or noodles.",
-  total_calories: 400,
-  fat: 15,
-  protein: 25,
-  carbs: 40,
-  category: "Main Dish"
-)
-
-Recipe.create!(
-  name: "Roasted Vegetable Frittata",
-  description: "Hearty and nutritious baked egg dish with roasted vegetables",
-  instructions: "1. Preheat the oven to 375°F (190°C).\n2. Toss diced vegetables (such as bell peppers, zucchini, mushrooms, and onions) with olive oil, salt, and pepper.\n3. Spread the vegetables in a single layer on a baking sheet and roast for about 20-25 minutes, or until they are tender and slightly caramelized.\n4. In a large bowl, whisk together eggs, milk, grated cheese, salt, and pepper.\n5. Grease a baking dish and spread the roasted vegetables evenly on the bottom.\n6. Pour the egg mixture over the vegetables, ensuring they are well covered.\n7. Bake in the preheated oven for 25-30 minutes, or until the frittata is set in the center and lightly golden on top.\n8. Let it cool for a few minutes, then slice into wedges and serve.",
-  total_calories: 300,
-  fat: 20,
-  protein: 15,
-  carbs: 15,
-  category: "Breakfast"
-)
-
-Recipe.create!(
-  name: "Roasted Vegetable Frittata",
-  description: "Hearty and nutritious baked egg dish with roasted vegetables",
-  instructions: "1. Preheat the oven to 375°F (190°C).\n2. Toss diced vegetables (such as bell peppers, zucchini, mushrooms, and onions) with olive oil, salt, and pepper.\n3. Spread the vegetables in a single layer on a baking sheet and roast for about 20-25 minutes, or until they are tender and slightly caramelized.\n4. In a large bowl, whisk together eggs, milk, grated cheese, salt, and pepper.\n5. Grease a baking dish and spread the roasted vegetables evenly on the bottom.\n6. Pour the egg mixture over the vegetables, ensuring they are well covered.\n7. Bake in the preheated oven for 25-30 minutes, or until the frittata is set in the center and lightly golden on top.\n8. Let it cool for a few minutes, then slice into wedges and serve.",
-  total_calories: 300,
-  category: "Breakfast"
-)
+end
 
 20.times do
   FavouriteRecipe.create!(user: User.all.sample, recipe: Recipe.all.sample)
@@ -343,9 +353,21 @@ end
 end
 
 150.times do
+  content = ["This recipe is a delightful combination of flavors that will tantalize your taste buds and leave you craving for more.",
+    "Prepare to be impressed by the mouthwatering flavors and textures of this dish that will surely satisfy your culinary desires.",
+    "Indulge in the perfect harmony of ingredients that create a truly satisfying and memorable culinary experience.",
+    "Elevate your taste buds with this dish that showcases a delicious blend of flavors, textures, and aromas.",
+    "Treat yourself to a culinary masterpiece that combines the best ingredients and techniques, resulting in a dish that is both comforting and indulgent.",
+    "Get ready to embark on a flavor adventure with this recipe that brings together a delightful fusion of ingredients to create a truly memorable dining experience.",
+    "This dish is a culinary triumph that showcases a harmonious blend of flavors, leaving you with a lingering taste of perfection.",
+    "Prepare to be amazed by the exquisite combination of ingredients that dance on your palate, delivering a symphony of flavors in every bite.",
+    "This recipe is a testament to culinary creativity, featuring a tantalizing medley of ingredients that will leave you craving its unique and delicious taste.",
+    "Discover a culinary gem with this dish that effortlessly combines simplicity and elegance, resulting in a taste sensation that will leave you in awe."
+  ].sample
   Review.create!(
     user: User.all.sample,
     recipe: Recipe.all.sample,
-    rating: rand(2.5..5.0).round(1)
+    rating: rand(2.5..5.0).round(1),
+    content: content
   )
 end
