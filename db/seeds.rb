@@ -343,7 +343,7 @@ end
 end
 
 150.times do
-  Reviews.create!(
+  Review.create!(
     user: User.all.sample,
     recipe: Recipe.all.sample,
     rating: rand(2.5..5.0).round(1)
