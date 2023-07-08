@@ -29,6 +29,7 @@ gem "jbuilder"
 gem "sassc-rails"
 gem "dotenv-rails", groups: [:development, :test]
 gem "cloudinary"
+gem "faker"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
