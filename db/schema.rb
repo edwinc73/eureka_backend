@@ -92,13 +92,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
   end
 
   create_table "meals", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "goal_id", null: false
     t.bigint "recipe_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["goal_id"], name: "index_meals_on_goal_id"
     t.index ["recipe_id"], name: "index_meals_on_recipe_id"
-    t.index ["user_id"], name: "index_meals_on_user_id"
   end
 
   create_table "preps", force: :cascade do |t|
@@ -116,8 +116,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
     t.text "description"
     t.text "instructions"
     t.integer "total_calories"
-    t.integer "total_nutrients"
     t.string "category"
+    t.float "fat"
+    t.float "protein"
+    t.float "carbs"
+    t.float "fiber"
+    t.integer "sodium"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -150,8 +154,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
   add_foreign_key "favourite_recipes", "recipes"
   add_foreign_key "favourite_recipes", "users"
   add_foreign_key "goals", "users"
+  add_foreign_key "meals", "goals"
   add_foreign_key "meals", "recipes"
-  add_foreign_key "meals", "users"
   add_foreign_key "preps", "ingredients"
   add_foreign_key "preps", "recipes"
   add_foreign_key "reviews", "recipes"
