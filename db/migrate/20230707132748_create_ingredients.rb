@@ -8,7 +8,7 @@ class CreateIngredients < ActiveRecord::Migration[7.0]
       t.float :fats
       t.float :proteins
       t.float :carbs
-      t.float :fibre
+      t.float :fiber
       t.integer :sodium
 
       t.timestamps
