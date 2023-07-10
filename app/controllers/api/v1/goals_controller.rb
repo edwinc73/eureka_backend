@@ -15,7 +15,10 @@ class Api::V1::GoalsController < Api::V1::BaseController
   end
 
   def index
-    @goals = Goal.includes(:meals).all
+    # @user = @current_user
+    @user = User.last
+    @goals = @user.goals.all
+    @weekly_goals = @goals.last(7)
   end
 
   def create
