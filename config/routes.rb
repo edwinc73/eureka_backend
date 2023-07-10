@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'login', to: 'sessions#login', as: :login
       resources :users, only: %i[show update] do
+        get 'suggestion', to: 'recipes#suggestion'
         resources :goals, only: %i[show create index update]
       end
       resources :recipes, only: %i[show create index update] do
