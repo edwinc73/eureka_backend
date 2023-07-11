@@ -1,4 +1,5 @@
 require 'faker'
+require 'open-uri'
 
 oils = [
   { name: "Olive oil", calories: 884, portion_size: 100, fats: 100, proteins: 0, carbs: 0, fiber: 0, sodium: 2 },
@@ -237,7 +238,8 @@ recipes = [
     fat: 40,
     protein: 30,
     carbs: 60 ,
-    category: "Main Dish"
+    category: "Main Dish",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2020/10/spaghetti-carbonara-01.jpg"
   },
   {
     name: "Caprese Salad",
@@ -247,7 +249,8 @@ recipes = [
     fat: 15,
     protein: 15,
     carbs: 10,
-    category: "Salad"
+    category: "Salad",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2020/07/caprese-salad-5.jpg"
   },
   {
     name: "Chicken Parmesan",
@@ -257,7 +260,8 @@ recipes = [
     fat: 20,
     protein: 35,
     carbs: 30,
-    category: "Main Dish"
+    category: "Main Dish",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2013/02/chicken-parmesan-14.jpg"
   },
   {
     name: "Banana Bread",
@@ -267,7 +271,8 @@ recipes = [
     fat: 8,
     protein: 3,
     carbs: 30,
-    category: "Dessert"
+    category: "Dessert",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2015/05/skinny-banana-bread6-srgb.1.jpg"
   },
   {
     name: "Grilled Salmon with Lemon Butter",
@@ -277,7 +282,8 @@ recipes = [
     fat: 25,
     protein: 30,
     carbs: 2,
-    category: "Main Dish"
+    category: "Main Dish",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2018/05/grilled-lemon-herb-salmon-7.jpg"
   },
   {
     name: "Mediterranean Quinoa Salad",
@@ -287,7 +293,8 @@ recipes = [
     fat: 10,
     protein: 8,
     carbs: 35,
-    category: "Salad"
+    category: "Salad",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2020/01/quinoa-salad-16.jpg"
   },
   {
     name: "Beef Stir-Fry",
@@ -297,7 +304,8 @@ recipes = [
     fat: 15,
     protein: 25,
     carbs: 40,
-    category: "Main Dish"
+    category: "Main Dish",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2016/07/szechuan_chicken_stir_fry9..jpg"
   },
   {
     name: "Roasted Vegetable Frittata",
@@ -307,12 +315,13 @@ recipes = [
     fat: 20,
     protein: 15,
     carbs: 15,
-    category: "Breakfast"
+    category: "Breakfast",
+    photo: "https://www.cookingclassy.com/wp-content/uploads/2018/12/roasted-vegetables-10.jpg"
   }
 ]
 
 recipes.each do |recipe|
-  Recipe.create!(
+  new_recipe = Recipe.create!(
     name: recipe[:name],
     description: recipe[:description],
     instructions: recipe[:instructions],
@@ -322,6 +331,9 @@ recipes.each do |recipe|
     carbs: recipe[:carbs],
     category: recipe[:category]
   )
+  # file = URI.open(recipe[:photo])
+  # new_recipe.photos.attach(io: file, filename: "#{recipe[:name]}.jpeg", content_type: "image/jpeg")
+  # new_recipe.save
 end
 
 # add ingredients into "Pasta cooked"
