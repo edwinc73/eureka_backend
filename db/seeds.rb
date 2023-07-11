@@ -380,11 +380,11 @@ end
 User.all.each do |user|
   Goal.create!(
     user: user,
-    calorie_goal: rand(1000..2000),
+    calorie_goal: rand(1200..2500),
     current_calorie: rand(0..3000),
-    fat_goal: rand(0..200),
-    protein_goal: rand(0..200),
-    carbs_goal: rand(0..200),
+    fat_goal: rand(40..80),
+    protein_goal: rand(60..180),
+    carbs_goal: rand(100..250),
   )
 end
 
