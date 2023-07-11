@@ -13,10 +13,11 @@ Rails.application.routes.draw do
         member do
           post 'add_review'
           post 'upload_img'
+          resources :favourite_recipes, only: %i[create destroy]
         end
       end
       resources :meals, only: %i[show create index]
-      resources :favourite_recipes, only: %i[index create destroy]
+      resources :favourite_recipes, only: %i[index]
     end
   end
 end

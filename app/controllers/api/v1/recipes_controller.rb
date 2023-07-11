@@ -1,5 +1,5 @@
 class Api::V1::RecipesController < Api::V1::BaseController
-  before_action :set_recipe, only: %i[show update add_review]
+  before_action :set_recipe, only: %i[show update create upload_img add_review]
   def index
     #params[:query] = "eg"
     if params[:query].present?
@@ -15,8 +15,23 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   end
 
-  def upload_img
+  def create
 
+  end
+
+  def update
+
+  end
+
+  def upload_img
+    photo = params[:photos]
+    @recipe.photos.attach(photo)
+    @recipe.save!
+    if @recipe.save
+      render json: { message: 'Image uploaded successfully' }
+    else
+      render json: { error: @recipe.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def suggestion
