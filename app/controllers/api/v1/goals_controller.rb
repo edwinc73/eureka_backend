@@ -25,6 +25,14 @@ class Api::V1::GoalsController < Api::V1::BaseController
 
   end
 
+  def update
+    if @goal.update(goal_params)
+      render json: { msg: 'your goal updated' }
+    else
+      render_error
+    end
+  end
+
   private
 
   def goal_params

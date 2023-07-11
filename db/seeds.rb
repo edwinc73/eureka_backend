@@ -308,13 +308,6 @@ recipes = [
     protein: 15,
     carbs: 15,
     category: "Breakfast"
-  },
-  {
-  name: "Roasted Vegetable Frittata",
-  description: "Hearty and nutritious baked egg dish with roasted vegetables",
-  instructions: "1. Preheat the oven to 375°F (190°C).\n2. Toss diced vegetables (such as bell peppers, zucchini, mushrooms, and onions) with olive oil, salt, and pepper.\n3. Spread the vegetables in a single layer on a baking sheet and roast for about 20-25 minutes, or until they are tender and slightly caramelized.\n4. In a large bowl, whisk together eggs, milk, grated cheese, salt, and pepper.\n5. Grease a baking dish and spread the roasted vegetables evenly on the bottom.\n6. Pour the egg mixture over the vegetables, ensuring they are well covered.\n7. Bake in the preheated oven for 25-30 minutes, or until the frittata is set in the center and lightly golden on top.\n8. Let it cool for a few minutes, then slice into wedges and serve.",
-  total_calories: 300,
-  category: "Breakfast"
   }
 ]
 
