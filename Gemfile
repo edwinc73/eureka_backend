@@ -31,7 +31,7 @@ gem "dotenv-rails", groups: [:development, :test]
 gem "cloudinary"
 gem "faker"
 gem 'open-uri'
-
+gem 'active_model_serializers'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
