@@ -8,11 +8,12 @@ class Api::V1::RecipesController < Api::V1::BaseController
       @ingredients = Ingredient.where('LOWER(name) LIKE LOWER(?)', search_query)
     else
       @recipes = Recipe.all
+      render json: @recipes, serializer: RecipeSerializer
     end
   end
 
   def show
-
+    render json: @recipe, serializer: RecipeSerializer
   end
 
   def create
