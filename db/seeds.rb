@@ -384,7 +384,7 @@ User.all.each do |user|
     current_calorie: rand(0..3000),
     fat_goal: rand(40..80),
     protein_goal: rand(60..180),
-    carbs_goal: rand(100..250),
+    carbs_goal: rand(100..250)
   )
 end
 
