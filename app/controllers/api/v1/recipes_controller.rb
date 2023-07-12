@@ -72,8 +72,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def filter_recipes_by_calories(calorie_gap)
-    if calorie_gap < 200
-      suggested_recipes = Recipe.where(total_calories: 0..200)
+    if calorie_gap < 250
+      suggested_recipes = Recipe.where(total_calories: 0..250)
     else
       suggested_recipes = Recipe.where("total_calories < ?", calorie_gap)
     end

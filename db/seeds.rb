@@ -198,7 +198,8 @@ condiments = [
   { name: "Tahini", calories: 595, portion_size: 100, fats: 53, proteins: 17, carbs: 18, fiber: 9.3, sodium: 14 },
   { name: "Peanut butter", calories: 588, portion_size: 100, fats: 50, proteins: 25, carbs: 20, fiber: 6, sodium: 441 },
   { name: "Maple syrup", calories: 260, portion_size: 100, fats: 0, proteins: 0, carbs: 67, fiber: 0, sodium: 4 },
-  { name: "Vinegar", calories: 18, portion_size: 100, fats: 0, proteins: 0, carbs: 0.9, fiber: 0, sodium: 2 }
+  { name: "Vinegar", calories: 18, portion_size: 100, fats: 0, proteins: 0, carbs: 0.9, fiber: 0, sodium: 2 },
+  { name: "Water", calories: 0, portion_size: 0, fats: 0, proteins: 0, carbs: 0, fiber: 0, sodium: 0 }
 ]
 
 condiments.each do |condiment|
