@@ -1,5 +1,5 @@
 json.suggestion_recipes @suggested_recipes do |recipe|
-  json.extract! recipe, :name, :description, :instructions, :total_calories, :category, :carbs, :fat, :protein, :fiber, :sodium
+  json.extract! recipe, :id, :name, :description, :instructions, :total_calories, :category, :carbs, :fat, :protein, :fiber, :sodium
   json.images recipe.photos do |photo|
     json.extract! photo, :url
   end
