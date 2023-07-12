@@ -11,6 +11,7 @@ class CreateRecipes < ActiveRecord::Migration[7.0]
       t.float :carbs
       t.float :fiber
       t.integer :sodium
+      t.string :photo
 
       t.timestamps
     end

@@ -62,7 +62,7 @@ meats = [
   { name: "Buffalo", calories: 109, portion_size: 100, fats: 1.8, proteins: 21, carbs: 0, fiber: 0, sodium: 54 },
   { name: "Wild boar", calories: 155, portion_size: 100, fats: 5, proteins: 28, carbs: 0, fiber: 0, sodium: 54 },
   { name: "Ostrich", calories: 116, portion_size: 100, fats: 3, proteins: 22, carbs: 0, fiber: 0, sodium: 49 },
-  { name:"Egg", calories: 142, portion_size: 100, fats: 9.9, protein: 12.2, carbs: 1.4, fiber: 0, sodium: 136}
+  { name:"Egg", calories: 142, portion_size: 100, fats: 9.9, proteins: 12.2, carbs: 1.4, fiber: 0, sodium: 136}
 ]
 
 meats.each do |meat|
@@ -237,7 +237,9 @@ recipes = [
     total_calories: 700,
     fat: 40,
     protein: 30,
-    carbs: 60 ,
+    carbs: 60,
+    fiber: 10,
+    sodium: 700,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2020/10/spaghetti-carbonara-01.jpg"
   },
@@ -249,6 +251,8 @@ recipes = [
     fat: 15,
     protein: 15,
     carbs: 10,
+    fiber: 12,
+    sodium: 200,
     category: "Salad",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2020/07/caprese-salad-5.jpg"
   },
@@ -260,6 +264,8 @@ recipes = [
     fat: 20,
     protein: 35,
     carbs: 30,
+    fiber: 12,
+    sodium: 500,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2013/02/chicken-parmesan-14.jpg"
   },
@@ -271,6 +277,8 @@ recipes = [
     fat: 8,
     protein: 3,
     carbs: 30,
+    fiber: 14,
+    sodium: 50,
     category: "Dessert",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2015/05/skinny-banana-bread6-srgb.1.jpg"
   },
@@ -282,6 +290,8 @@ recipes = [
     fat: 25,
     protein: 30,
     carbs: 2,
+    fiber: 10,
+    sodium: 400,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2018/05/grilled-lemon-herb-salmon-7.jpg"
   },
@@ -293,6 +303,8 @@ recipes = [
     fat: 10,
     protein: 8,
     carbs: 35,
+    fiber: 12,
+    sodium: 100,
     category: "Salad",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2020/01/quinoa-salad-16.jpg"
   },
@@ -304,6 +316,8 @@ recipes = [
     fat: 15,
     protein: 25,
     carbs: 40,
+    fiber: 16,
+    sodium: 500,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2016/07/szechuan_chicken_stir_fry9..jpg"
   },
@@ -315,6 +329,8 @@ recipes = [
     fat: 20,
     protein: 15,
     carbs: 15,
+    fiber: 10,
+    sodium: 300,
     category: "Breakfast",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2018/12/roasted-vegetables-10.jpg"
   }
@@ -329,7 +345,10 @@ recipes.each do |recipe|
     fat: recipe[:fat],
     protein: recipe[:protein],
     carbs: recipe[:carbs],
-    category: recipe[:category]
+    fiber: recipe[:fiber],
+    sodium: recipe[:sodium],
+    category: recipe[:category],
+    photo: recipe[:photo]
   )
   # file = URI.open(recipe[:photo])
   # new_recipe.photos.attach(io: file, filename: "#{recipe[:name]}.jpeg", content_type: "image/jpeg")

@@ -5,13 +5,10 @@ class Api::V1::RecipesController < Api::V1::BaseController
     if params[:query].present?
       search_query = "%#{params[:query]}%"
       @recipes = Recipe.where('LOWER(name) LIKE LOWER(?)', search_query)
-      @ingredients = Ingredient.where('LOWER(name) LIKE LOWER(?)', search_query)
     else
       @recipes = Recipe.all
     end
-    return
     render json: @recipes, each_serializer: RecipeSerializer
-    render json: @ingredients, each_serializer: IngredientSerializer
   end
 
   def show

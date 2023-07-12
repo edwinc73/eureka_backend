@@ -1,10 +1,14 @@
 class RecipeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :instructions, :total_calories, :category, :fat, :protein, :carbs, :fiber, :sodium, :photos, :rating, :created_at, :updated_at
+  attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at
   has_many :ingredients, if: -> { instance_options[:show_reviews] }
   has_many :reviews, if: -> { instance_options[:show_reviews] }
 
   def photos
-    object.photos.map { |photo| photo.url }
+    if object.photos.attached?
+      object.photos.map { |photo| photo.url }
+    else
+      object.photo
+    end
   end
 
   def rating
@@ -30,6 +34,51 @@ class RecipeSerializer < ActiveModel::Serializer
         name: ingredient.ingredient.name,
         portion: ingredient.portion
       }
+    end
+  end
+
+  def total_calories
+    if object.preps.present?
+      ingredient_calories = object.preps.map do |ingredient|
+        ingredient.portion * ingredient.ingredient.calories
+      end
+      ingredient_calories.sum
+    else
+      object.total_calories
+    end
+  end
+
+  def nutritious
+    if object.preps.empty?
+      {
+        fat: object.fat,
+        protein: object.protein,
+        carbs: object.carbs,
+        fiber: object.fiber,
+        sodium: object.sodium
+      }
+    else
+      fat = object.preps.map { |i| i.portion * i.ingredient.fats }
+      protein = object.preps.map { |i| i.portion * i.ingredient.proteins }
+      carbs = object.preps.map { |i| i.portion * i.ingredient.carbs }
+      fiber = object.preps.map { |i| i.portion * i.ingredient.fiber }
+      sodium = object.preps.map { |i| i.portion * i.ingredient.sodium }
+      {
+        fat: fat.sum,
+        protein: protein.sum,
+        carbs: carbs.sum,
+        fiber: fiber.sum,
+        sodium: sodium.sum.round
+      }
+    end
+  end
+
+  def portion
+    if object.preps.empty?
+      3
+    else
+      ingredient_portion = object.preps.map { |i| i.portion }
+      ingredient_portion.sum
     end
   end
 
