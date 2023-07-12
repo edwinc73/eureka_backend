@@ -5,15 +5,14 @@ class Api::V1::RecipesController < Api::V1::BaseController
     if params[:query].present?
       search_query = "%#{params[:query]}%"
       @recipes = Recipe.where('LOWER(name) LIKE LOWER(?)', search_query)
-      @ingredients = Ingredient.where('LOWER(name) LIKE LOWER(?)', search_query)
     else
       @recipes = Recipe.all
-      render json: @recipes, serializer: RecipeSerializer
     end
+    render json: @recipes, each_serializer: RecipeSerializer
   end
 
   def show
-    render json: @recipe, serializer: RecipeSerializer
+    render json: @recipe, serializer: RecipeSerializer, show: true
   end
 
   def create
@@ -44,6 +43,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     goal = user.goals.last
     calorie_gap = goal.calorie_goal - goal.current_calorie
     @suggested_recipes = filter_recipes_by_calories(calorie_gap)
+    render json: @suggested_recipes, each_serializer: RecipeSerializer
   end
 
   def add_review
@@ -72,8 +72,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def filter_recipes_by_calories(calorie_gap)
-    if calorie_gap < 200
-      suggested_recipes = Recipe.where(total_calories: 0..200)
+    if calorie_gap < 250
+      suggested_recipes = Recipe.where(total_calories: 0..250)
     else
       suggested_recipes = Recipe.where("total_calories < ?", calorie_gap)
     end

@@ -1,4 +1,4 @@
-class Api::V1::FavouriteRecipesController < ApplicationController
+class Api::V1::FavouriteRecipesController < Api::V1::BaseController
   def index
     # user = @current_user.id
     user = User.last

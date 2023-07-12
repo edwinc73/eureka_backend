@@ -62,7 +62,7 @@ meats = [
   { name: "Buffalo", calories: 109, portion_size: 100, fats: 1.8, proteins: 21, carbs: 0, fiber: 0, sodium: 54 },
   { name: "Wild boar", calories: 155, portion_size: 100, fats: 5, proteins: 28, carbs: 0, fiber: 0, sodium: 54 },
   { name: "Ostrich", calories: 116, portion_size: 100, fats: 3, proteins: 22, carbs: 0, fiber: 0, sodium: 49 },
-  { name:"Egg", calories: 142, portion_size: 100, fats: 9.9, protein: 12.2, carbs: 1.4, fiber: 0, sodium: 136}
+  { name:"Egg", calories: 142, portion_size: 100, fats: 9.9, proteins: 12.2, carbs: 1.4, fiber: 0, sodium: 136}
 ]
 
 meats.each do |meat|
@@ -198,7 +198,8 @@ condiments = [
   { name: "Tahini", calories: 595, portion_size: 100, fats: 53, proteins: 17, carbs: 18, fiber: 9.3, sodium: 14 },
   { name: "Peanut butter", calories: 588, portion_size: 100, fats: 50, proteins: 25, carbs: 20, fiber: 6, sodium: 441 },
   { name: "Maple syrup", calories: 260, portion_size: 100, fats: 0, proteins: 0, carbs: 67, fiber: 0, sodium: 4 },
-  { name: "Vinegar", calories: 18, portion_size: 100, fats: 0, proteins: 0, carbs: 0.9, fiber: 0, sodium: 2 }
+  { name: "Vinegar", calories: 18, portion_size: 100, fats: 0, proteins: 0, carbs: 0.9, fiber: 0, sodium: 2 },
+  { name: "Water", calories: 0, portion_size: 0, fats: 0, proteins: 0, carbs: 0, fiber: 0, sodium: 0 }
 ]
 
 condiments.each do |condiment|
@@ -234,10 +235,12 @@ recipes = [
     name: "Pasta Carbonara",
     description: "Classic Italian pasta dish with creamy sauce and bacon",
     instructions: "1. Cook the pasta in a large pot of salted boiling water until al dente.\n2. In a skillet, cook the bacon until crispy. Remove from heat and set aside.\n3. In a bowl, whisk together the eggs, grated cheese, and black pepper.\n4. Drain the pasta, reserving a small amount of the cooking water.\n5. While the pasta is still hot, add it to the skillet with the cooked bacon. Toss to combine.\n6. Gradually pour the egg mixture over the hot pasta, stirring quickly to coat the pasta evenly.\n7. If the sauce is too thick, add a small amount of the reserved cooking water to thin it out.\n8. Serve immediately with extra grated cheese on top.",
-    total_calories: 700,
+    total_calories: 650,
     fat: 40,
     protein: 30,
-    carbs: 60 ,
+    carbs: 60,
+    fiber: 10,
+    sodium: 700,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2020/10/spaghetti-carbonara-01.jpg"
   },
@@ -249,6 +252,8 @@ recipes = [
     fat: 15,
     protein: 15,
     carbs: 10,
+    fiber: 12,
+    sodium: 200,
     category: "Salad",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2020/07/caprese-salad-5.jpg"
   },
@@ -260,6 +265,8 @@ recipes = [
     fat: 20,
     protein: 35,
     carbs: 30,
+    fiber: 12,
+    sodium: 500,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2013/02/chicken-parmesan-14.jpg"
   },
@@ -271,6 +278,8 @@ recipes = [
     fat: 8,
     protein: 3,
     carbs: 30,
+    fiber: 14,
+    sodium: 50,
     category: "Dessert",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2015/05/skinny-banana-bread6-srgb.1.jpg"
   },
@@ -282,6 +291,8 @@ recipes = [
     fat: 25,
     protein: 30,
     carbs: 2,
+    fiber: 10,
+    sodium: 400,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2018/05/grilled-lemon-herb-salmon-7.jpg"
   },
@@ -293,6 +304,8 @@ recipes = [
     fat: 10,
     protein: 8,
     carbs: 35,
+    fiber: 12,
+    sodium: 100,
     category: "Salad",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2020/01/quinoa-salad-16.jpg"
   },
@@ -304,6 +317,8 @@ recipes = [
     fat: 15,
     protein: 25,
     carbs: 40,
+    fiber: 16,
+    sodium: 500,
     category: "Main Dish",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2016/07/szechuan_chicken_stir_fry9..jpg"
   },
@@ -315,6 +330,8 @@ recipes = [
     fat: 20,
     protein: 15,
     carbs: 15,
+    fiber: 10,
+    sodium: 300,
     category: "Breakfast",
     photo: "https://www.cookingclassy.com/wp-content/uploads/2018/12/roasted-vegetables-10.jpg"
   }
@@ -329,7 +346,11 @@ recipes.each do |recipe|
     fat: recipe[:fat],
     protein: recipe[:protein],
     carbs: recipe[:carbs],
-    category: recipe[:category]
+    fiber: recipe[:fiber],
+    sodium: recipe[:sodium],
+    category: recipe[:category],
+    photo: recipe[:photo],
+    seed_data: true
   )
   # file = URI.open(recipe[:photo])
   # new_recipe.photos.attach(io: file, filename: "#{recipe[:name]}.jpeg", content_type: "image/jpeg")

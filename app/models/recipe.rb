@@ -5,5 +5,6 @@ class Recipe < ApplicationRecord
   has_many :users, through: :favourite_recipes
   has_many :reviews
   validates :name, :description, presence: true
+  attribute :seed_data, :boolean, default: false
   has_many_attached :photos
 end

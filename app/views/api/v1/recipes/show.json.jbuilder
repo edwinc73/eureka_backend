@@ -1,6 +1,6 @@
 json.extract! @recipe, :id, :name, :description, :instructions, :total_calories, :category, :fat, :protein, :carbs, :fiber, :sodium
 
-json.images @recipe.photos do |photo|
+json.photos @recipe.photos do |photo|
   json.photo_url photo.url
 end
 
