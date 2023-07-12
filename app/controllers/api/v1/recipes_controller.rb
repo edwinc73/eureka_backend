@@ -43,6 +43,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     goal = user.goals.last
     calorie_gap = goal.calorie_goal - goal.current_calorie
     @suggested_recipes = filter_recipes_by_calories(calorie_gap)
+    render json: @suggested_recipes, each_serializer: RecipeSerializer
   end
 
   def add_review
