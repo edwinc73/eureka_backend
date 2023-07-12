@@ -14,7 +14,7 @@ class Api::V1::FavouriteRecipesController < Api::V1::BaseController
   end
 
   def destroy
-    recipe = Recipe.find(9)
+    recipe = Recipe.find(params[:id])
     # user = @current_user.id
     user = User.last
     user.recipes.delete(recipe)
