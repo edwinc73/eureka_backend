@@ -234,7 +234,7 @@ recipes = [
     name: "Pasta Carbonara",
     description: "Classic Italian pasta dish with creamy sauce and bacon",
     instructions: "1. Cook the pasta in a large pot of salted boiling water until al dente.\n2. In a skillet, cook the bacon until crispy. Remove from heat and set aside.\n3. In a bowl, whisk together the eggs, grated cheese, and black pepper.\n4. Drain the pasta, reserving a small amount of the cooking water.\n5. While the pasta is still hot, add it to the skillet with the cooked bacon. Toss to combine.\n6. Gradually pour the egg mixture over the hot pasta, stirring quickly to coat the pasta evenly.\n7. If the sauce is too thick, add a small amount of the reserved cooking water to thin it out.\n8. Serve immediately with extra grated cheese on top.",
-    total_calories: 700,
+    total_calories: 650,
     fat: 40,
     protein: 30,
     carbs: 60,
@@ -348,7 +348,8 @@ recipes.each do |recipe|
     fiber: recipe[:fiber],
     sodium: recipe[:sodium],
     category: recipe[:category],
-    photo: recipe[:photo]
+    photo: recipe[:photo],
+    seed_data: true
   )
   # file = URI.open(recipe[:photo])
   # new_recipe.photos.attach(io: file, filename: "#{recipe[:name]}.jpeg", content_type: "image/jpeg")

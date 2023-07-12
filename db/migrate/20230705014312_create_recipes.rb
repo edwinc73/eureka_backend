@@ -12,6 +12,7 @@ class CreateRecipes < ActiveRecord::Migration[7.0]
       t.float :fiber
       t.integer :sodium
       t.string :photo
+      t.boolean :seed_data
 
       t.timestamps
     end

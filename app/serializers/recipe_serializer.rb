@@ -12,8 +12,12 @@ class RecipeSerializer < ActiveModel::Serializer
   end
 
   def rating
-    rating = object.reviews.map { |x| x.rating }
-    average = ((rating.sum)/rating.size).round(1)
+    if object.reviews.present?
+      rating = object.reviews.map { |x| x.rating }
+      average = ((rating.sum)/rating.size).round(1)
+    else
+      "No more reviews"
+    end
   end
 
   def reviews
@@ -38,18 +42,18 @@ class RecipeSerializer < ActiveModel::Serializer
   end
 
   def total_calories
-    if object.preps.present?
+    if object.seed_data? && object.preps.present?
       ingredient_calories = object.preps.map do |ingredient|
         ingredient.portion * ingredient.ingredient.calories
       end
-      ingredient_calories.sum
+      ingredient_calories.sum.round
     else
       object.total_calories
     end
   end
 
   def nutritious
-    if object.preps.empty?
+    if object.preps.empty? || object.seed_data == false
       {
         fat: object.fat,
         protein: object.protein,
