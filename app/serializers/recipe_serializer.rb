@@ -1,7 +1,7 @@
 class RecipeSerializer < ActiveModel::Serializer
   attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at
-  has_many :ingredients, if: -> { instance_options[:show_reviews] }
-  has_many :reviews, if: -> { instance_options[:show_reviews] }
+  has_many :ingredients, if: -> { instance_options[:show] }
+  has_many :reviews, if: -> { instance_options[:show] }
 
   def photos
     if object.photos.attached?

@@ -12,7 +12,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def show
-    render json: @recipe, serializer: RecipeSerializer, show_reviews: true
+    render json: @recipe, serializer: RecipeSerializer, show: true
   end
 
   def create
