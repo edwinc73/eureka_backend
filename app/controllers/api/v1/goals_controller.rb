@@ -1,11 +1,8 @@
 class Api::V1::GoalsController < Api::V1::BaseController
   before_action :set_goal, only: %i[update]
+  before_action :update_current_calories, only: %i[show]
   def show
     #@goal = @current_user.goals.last
-    @goal = User.last.goals.last
-    calorie_meals = @goal.meals.map {|meal| meal.recipe.total_calories}
-    @goal.current_calorie = calorie_meals.sum
-    @goal.save #update before show in case add more meals after goal_update
     fat_meals = @goal.meals.map {|meal| meal.recipe.fat}
     protein_meals = @goal.meals.map {|meal| meal.recipe.protein}
     carbs_meals = @goal.meals.map {|meal| meal.recipe.carbs}
@@ -21,10 +18,6 @@ class Api::V1::GoalsController < Api::V1::BaseController
     @user = User.last
     @goals = @user.goals.all
     @weekly_goals = @goals.last(7)
-  end
-
-  def create
-
   end
 
   def update
@@ -43,6 +36,15 @@ class Api::V1::GoalsController < Api::V1::BaseController
 
   def set_goal
     @goal = Goal.find(params[:id])
+  end
+
+  def update_current_calories
+    @goal = User.last.goals.last
+    calorie_meals = @goal.meals.map do |meal|
+      meal.recipe.total_calories / meal.recipe.portion * meal.portion
+    end
+    @goal.current_calorie = calorie_meals.sum
+    @goal.save
   end
 
   def render_error

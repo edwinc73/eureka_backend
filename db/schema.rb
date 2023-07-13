@@ -96,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
   create_table "meals", force: :cascade do |t|
     t.bigint "goal_id", null: false
     t.bigint "recipe_id", null: false
+    t.float "portion"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
