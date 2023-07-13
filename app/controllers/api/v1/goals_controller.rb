@@ -1,6 +1,8 @@
 class Api::V1::GoalsController < Api::V1::BaseController
-  before_action :set_goal, only: %i[show update]
+  before_action :set_goal, only: %i[update]
   def show
+    #@goal = @current_user.goals.last
+    @goal = User.last.goals.last
     calorie_meals = @goal.meals.map {|meal| meal.recipe.total_calories}
     @goal.current_calorie = calorie_meals.sum
     @goal.save #update before show in case add more meals after goal_update
