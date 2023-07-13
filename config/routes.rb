@@ -15,7 +15,8 @@ Rails.application.routes.draw do
           post 'upload_img'
         end
       end
-      resources :favourite_recipes, only: %i[create destroy]
+      resources :favourite_recipes, only: %i[create ]
+      delete "favourite_delete", to: "favourite_recipes#cancel"
       resources :meals, only: %i[show create index]
       resources :favourite_recipes, only: %i[index]
     end

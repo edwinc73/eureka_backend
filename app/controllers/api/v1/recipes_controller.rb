@@ -12,6 +12,10 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def show
+    # specific seed whose preps don't match the seed data need to update
+    if @recipe.seed_data? && @recipe.preps.present?
+      update_seed_data
+    end
     render json: @recipe, serializer: RecipeSerializer, show: true
   end
 
@@ -77,6 +81,29 @@ class Api::V1::RecipesController < Api::V1::BaseController
     else
       suggested_recipes = Recipe.where("total_calories < ?", calorie_gap)
     end
+  end
+
+  def update_seed_data
+    ingredient_calories = @recipe.preps.map do |ingredient|
+      ingredient.portion * ingredient.ingredient.calories
+    end
+    ingredient_portion = @recipe.preps.map { |i| i.portion }
+    fat = @recipe.preps.map { |i| i.portion * i.ingredient.fats }
+    protein = @recipe.preps.map { |i| i.portion * i.ingredient.proteins }
+    carbs = @recipe.preps.map { |i| i.portion * i.ingredient.carbs }
+    fiber = @recipe.preps.map { |i| i.portion * i.ingredient.fiber }
+    sodium = @recipe.preps.map { |i| i.portion * i.ingredient.sodium }
+    @recipe.update(
+      total_calories: ingredient_calories.sum.round,
+      fat: fat.sum,
+      protein: protein.sum,
+      carbs: carbs.sum,
+      fiber: fiber.sum,
+      sodium: sodium.sum,
+      portion: ingredient_portion.sum,
+      seed_data: false
+    )
+    @recipe.save
   end
 
   # def filter_recipes_by_bmi(bmi)

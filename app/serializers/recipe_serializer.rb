@@ -78,11 +78,11 @@ class RecipeSerializer < ActiveModel::Serializer
   end
 
   def portion
-    if object.preps.empty?
-      3
-    else
+    if object.seed_data? && object.preps.present?
       ingredient_portion = object.preps.map { |i| i.portion }
       ingredient_portion.sum
+    else
+      object.portion
     end
   end
 

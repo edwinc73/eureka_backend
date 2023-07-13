@@ -348,6 +348,7 @@ recipes.each do |recipe|
     carbs: recipe[:carbs],
     fiber: recipe[:fiber],
     sodium: recipe[:sodium],
+    portion: 3.0,
     category: recipe[:category],
     photo: recipe[:photo],
     seed_data: true
