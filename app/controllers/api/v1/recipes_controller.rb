@@ -65,7 +65,13 @@ class Api::V1::RecipesController < Api::V1::BaseController
     #user = @current_user
     user = User.last
     goal = user.goals.last
-    Meal.create(goal: goal, recipe: @recipe)
+    portion = params[:portion]
+    meal = Meal.new(goal: goal, recipe: @recipe, portion: portion)
+    if meal.save
+      render json: { message: "Meal added successfully" }
+    else
+      render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   private

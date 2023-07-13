@@ -414,6 +414,7 @@ end
   Meal.create!(
     recipe: Recipe.all.sample,
     goal: Goal.all.sample,
+    portion: rand(0.8..3.5).round(1),
     name: ["breakfast", "lunch", "dinner"].sample
   )
 end
