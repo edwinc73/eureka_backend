@@ -1,5 +1,5 @@
 class RecipeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at
+  attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at, :user_favourite
   has_many :ingredients, if: -> { instance_options[:show] }
   has_many :reviews, if: -> { instance_options[:show] }
 
@@ -92,5 +92,10 @@ class RecipeSerializer < ActiveModel::Serializer
 
   def updated_at
     object.updated_at.strftime("%Y-%m-%d")
+  end
+
+  def user_favourite
+    # user = @current_user.id
+    exist = User.last.recipes.count { |x| x.id == object.id } == 1
   end
 end

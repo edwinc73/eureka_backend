@@ -65,8 +65,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     #user = @current_user
     user = User.last
     goal = user.goals.last
-    portion = params[:portion]
-    meal = Meal.new(goal: goal, recipe: @recipe, portion: portion)
+    meal = Meal.new(meal_params.merge(goal: goal, recipe: @recipe))
     if meal.save
       render json: { message: "Meal added successfully" }
     else
@@ -78,6 +77,10 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def set_recipe
     @recipe = Recipe.find(params[:id])
+  end
+
+  def meal_params
+    params.require(:meal).permit(:portion)
   end
 
   def recipe_params
