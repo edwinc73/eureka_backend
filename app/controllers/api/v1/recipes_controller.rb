@@ -1,5 +1,5 @@
 class Api::V1::RecipesController < Api::V1::BaseController
-  before_action :set_recipe, only: %i[show update create upload_img add_review]
+  before_action :set_recipe, only: %i[show update create upload_img add_review add_to_goal]
   def index
     #params[:query] = "eg"
     if params[:query].present?
@@ -59,6 +59,13 @@ class Api::V1::RecipesController < Api::V1::BaseController
     else
       render json: { error: review.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def add_to_goal
+    #user = @current_user
+    user = User.last
+    goal = user.goals.last
+    Meal.create(goal: goal, recipe: @recipe)
   end
 
   private
