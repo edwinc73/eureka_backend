@@ -14,7 +14,7 @@ class Api::V1::FavouriteRecipesController < Api::V1::BaseController
     render json: { message: "Recipe added to favorites" }
   end
 
-  def destroy
+  def cancel
     recipe = Recipe.find(params[:id])
     # user = @current_user.id
     user = User.last
