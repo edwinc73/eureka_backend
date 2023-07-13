@@ -1,7 +1,7 @@
 class Api::V1::RecipesController < Api::V1::BaseController
   before_action :set_recipe, only: %i[show update create upload_img add_review]
   def index
-    params[:query] = "eg"
+    #params[:query] = "eg"
     if params[:query].present?
       search_query = "%#{params[:query]}%"
       @recipes = Recipe.where('LOWER(name) LIKE LOWER(?)', search_query)
