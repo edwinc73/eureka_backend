@@ -3,13 +3,13 @@ class Api::V1::GoalsController < Api::V1::BaseController
   before_action :update_current_calories, only: %i[show]
   def show
     #@goal = @current_user.goals.last
-    fat_meals = @goal.meals.map {|meal| meal.recipe.fat}
-    protein_meals = @goal.meals.map {|meal| meal.recipe.protein}
-    carbs_meals = @goal.meals.map {|meal| meal.recipe.carbs}
+    fat_meals = @goal.meals.map { |meal| meal.recipe.fat / meal.recipe.portion * meal.portion }
+    protein_meals = @goal.meals.map { |meal| meal.recipe.protein / meal.recipe.portion * meal.portion }
+    carbs_meals = @goal.meals.map { |meal| meal.recipe.carbs / meal.recipe.portion * meal.portion }
     @current_nutrition = {
-      current_fat: fat_meals.sum,
-      current_protein: protein_meals.sum,
-      current_carb: carbs_meals.sum
+      current_fat: fat_meals.sum.round(1),
+      current_protein: protein_meals.sum.round(1),
+      current_carb: carbs_meals.sum.round(1)
     }
   end
 

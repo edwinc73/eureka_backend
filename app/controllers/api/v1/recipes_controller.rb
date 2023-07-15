@@ -1,7 +1,7 @@
 class Api::V1::RecipesController < Api::V1::BaseController
   before_action :set_recipe, only: %i[show update create upload_img add_review add_to_goal]
   def index
-    #params[:query] = "eg"
+    #params[:query] = "salad"
     if params[:query].present?
       search_query = "%#{params[:query]}%"
       @recipes = Recipe.where('LOWER(name) LIKE LOWER(?)', search_query)
@@ -71,6 +71,11 @@ class Api::V1::RecipesController < Api::V1::BaseController
     else
       render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def index_ingredients
+    ingredients = Ingredient.all.group_by(&:category)
+    render json: ingredients, each_serializer: IngredientSerializer
   end
 
   private

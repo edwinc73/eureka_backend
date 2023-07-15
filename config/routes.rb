@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post 'add_to_goal', to: 'recipes#add_to_goal'
       resources :meals, only: %i[show create index]
       resources :favourite_recipes, only: %i[index]
+      get 'ingredients', to: 'recipes#index_ingredients'
     end
   end
 end

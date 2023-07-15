@@ -96,6 +96,6 @@ class RecipeSerializer < ActiveModel::Serializer
 
   def user_favourite
     # user = @current_user.id
-    exist = User.last.recipes.count { |x| x.id == object.id } == 1
+    User.last.recipes.count { |x| x.id == object.id } == 1
   end
 end
