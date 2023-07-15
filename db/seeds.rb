@@ -410,6 +410,17 @@ User.all.each do |user|
   )
 end
 
+10.times do
+  Goal.create!(
+    user: User.last,
+    calorie_goal: 1800,
+    current_calorie: 0,
+    fat_goal: 50,
+    protein_goal: 150,
+    carbs_goal: 180
+  )
+end
+
 50.times do
   Meal.create!(
     recipe: Recipe.all.sample,
