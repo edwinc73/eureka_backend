@@ -408,7 +408,10 @@ User.all.each do |user|
     current_calorie: rand(0..3000),
     fat_goal: rand(40..80),
     protein_goal: rand(60..180),
-    carbs_goal: rand(100..250)
+    carbs_goal: rand(100..250),
+    current_fat: rand(40..60),
+    current_protein: rand(100..180),
+    current_carbs: rand(120..180)
   )
 end
 
@@ -419,7 +422,10 @@ end
     current_calorie: rand(0..3000),
     fat_goal: 50,
     protein_goal: 150,
-    carbs_goal: 180
+    carbs_goal: 180,
+    current_fat: rand(40..60),
+    current_protein: rand(100..180),
+    current_carbs: rand(120..180)
   )
 end
 
@@ -429,10 +435,13 @@ Goal.create!(
   current_calorie: 0,
   fat_goal: 50,
   protein_goal: 150,
-  carbs_goal: 180
+  carbs_goal: 180,
+  current_fat: 0,
+  current_protein: 0,
+  current_carbs: 0
 )
 
-50.times do
+100.times do
   Meal.create!(
     recipe: Recipe.all.sample,
     goal: Goal.all.sample,
@@ -440,6 +449,9 @@ Goal.create!(
     name: ["breakfast", "lunch", "dinner"].sample
   )
 end
+
+#empty the today's meals
+User.last.goals.last.meals.destroy_all
 
 150.times do
   content = ["This recipe is a delightful combination of flavors that will tantalize your taste buds and leave you craving for more.",

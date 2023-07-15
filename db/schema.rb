@@ -75,6 +75,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
     t.float "fat_goal"
     t.float "protein_goal"
     t.float "carbs_goal"
+    t.float "current_fat"
+    t.float "current_protein"
+    t.float "current_carbs"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_goals_on_user_id"

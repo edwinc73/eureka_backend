@@ -1,5 +1,5 @@
 json.goals @goals do |goal|
-  json.extract! goal, :id, :calorie_goal, :current_calorie
+  json.extract! goal, :id, :calorie_goal, :current_calorie, :fat_goal, :protein_goal, :carbs_goal, :current_fat, :current_protein, :current_carbs
   json.created_date goal.created_at.strftime('%d')
   json.create_day goal.created_at.strftime('%A')
   json.updated_at goal.updated_at.strftime('%Y/%m/%d')
@@ -9,7 +9,7 @@ json.goals @goals do |goal|
 end
 
 json.weekly_goals @weekly_goals do |goal|
-  json.extract! goal, :id, :calorie_goal, :current_calorie
+  json.extract! goal, :id, :calorie_goal, :current_calorie, :fat_goal, :protein_goal, :carbs_goal, :current_fat, :current_protein, :current_carbs
   json.created_date goal.created_at.strftime('%d')
   json.create_day goal.created_at.strftime('%A')
   json.updated_at goal.updated_at.strftime('%Y/%m/%d')
