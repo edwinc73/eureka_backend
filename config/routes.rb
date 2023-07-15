@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[update]
       get 'profile', to: 'users#profile'
       get 'suggestion', to: 'recipes#suggestion'
-      resources :goals, only: %i[show create index update]
+      resources :goals, only: %i[show index update]
       resources :recipes, only: %i[show create index update] do
         member do
           post 'add_review'
