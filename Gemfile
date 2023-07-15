@@ -30,7 +30,7 @@ gem "cloudinary"
 gem "faker"
 gem 'open-uri'
 gem 'active_model_serializers'
-gem 'whenever', require: false
+gem 'whenever'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
