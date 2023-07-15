@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
   create_table "badges", force: :cascade do |t|
     t.string "name"
     t.string "badge_img"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -146,10 +147,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.integer "age"
-    t.integer "weight"
+    t.float "weight"
     t.integer "height"
     t.string "gender"
-    t.string "target"
+    t.float "goal_weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

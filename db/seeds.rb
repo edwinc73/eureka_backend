@@ -222,14 +222,14 @@ end
   weight = rand(35..100)
   height = rand(150..200)
   gender = ["m", "f"].sample
-  target = ["lose", "sustain", "gain"].sample
+  goal_weight = rand(45..75)
   User.create!(
     username: username,
     age: age,
     weight: weight,
     height: height,
     gender: gender,
-    target: target
+    goal_weight: goal_weight
   )
 end
 recipes = [
@@ -461,5 +461,5 @@ end
   )
 end
 
-Badge.create!(name: "straving")
+Badge.create!(name: "straving", description: "Didn't gain any calories for the whole day")
 Achievement.create!(user: User.last, badge: Badge.first)
