@@ -18,7 +18,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:age, :weight, :height, :gender, :target)
+    params.require(:user).permit(:age, :weight, :height, :gender, :goal_weight)
   end
 
   def render_error
