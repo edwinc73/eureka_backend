@@ -1,7 +1,8 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  def show
+  def profile
     # @user = @current_user
     @user = User.last
+    render json: @user, serializer: UserSerializer
   end
 
   def update
@@ -17,7 +18,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:age, :weight, :height, :gender)
+    params.require(:user).permit(:age, :weight, :height, :gender, :goal_weight)
   end
 
   def render_error

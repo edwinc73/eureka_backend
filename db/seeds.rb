@@ -222,12 +222,14 @@ end
   weight = rand(35..100)
   height = rand(150..200)
   gender = ["m", "f"].sample
+  goal_weight = rand(45..75)
   User.create!(
     username: username,
     age: age,
     weight: weight,
     height: height,
-    gender: gender
+    gender: gender,
+    goal_weight: goal_weight
   )
 end
 recipes = [
@@ -410,16 +412,25 @@ User.all.each do |user|
   )
 end
 
-10.times do
+8.times do
   Goal.create!(
     user: User.last,
     calorie_goal: 1800,
-    current_calorie: 0,
+    current_calorie: rand(0..3000),
     fat_goal: 50,
     protein_goal: 150,
     carbs_goal: 180
   )
 end
+
+Goal.create!(
+  user: User.last,
+  calorie_goal: 1800,
+  current_calorie: 0,
+  fat_goal: 50,
+  protein_goal: 150,
+  carbs_goal: 180
+)
 
 50.times do
   Meal.create!(
@@ -450,5 +461,5 @@ end
   )
 end
 
-Badge.create!(name: "straving")
+Badge.create!(name: "straving", description: "Didn't gain any calories for the whole day")
 Achievement.create!(user: User.last, badge: Badge.first)
