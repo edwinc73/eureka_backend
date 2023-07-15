@@ -4,8 +4,18 @@ namespace :goals do
     User.all.each do |user|
       bmr = calculate_bmr(user)
       user_target = user.goal_weight - user.weight
-      calorie_goal = calculate_calorie_goal(bmr, user_target)
-
+      goal = calculate_calorie_goal(bmr, user_target)
+      Goal.create!(
+        user: user,
+        calorie_goal: goal[:calories],
+        current_calorie: 0,
+        fat_goal: goal[:fat],
+        protein_goal: goal[:protein],
+        carbs_goal: goal[:carbs],
+        current_fat: 0,
+        current_protein: 0,
+        current_carbs: 0
+      )
     end
   end
 
@@ -27,24 +37,24 @@ namespace :goals do
     carbs = (bmr * 0.5) / 4
     if target <= 2 && target >= -2
       goal = {
-        fat: fat,
-        protein: protein,
-        cars: carbs,
+        fat: fat.round(1),
+        protein: protein.round(1),
+        carbs: carbs.round(1),
         calories: bmr
       }
     elsif target > 2
       goal = {
-        fat: fat * 1.2,
-        protein: protein * 1.2,
-        cars: carbs * 1.2,
-        calories: bmr * 1.2
+        fat: (fat * 1.2).round(1),
+        protein: (protein * 1.2).round(1),
+        carbs: (carbs * 1.2).round(1),
+        calories: (bmr * 1.2).round
       }
     else
       goal = {
-        fat: fat * 0.8,
-        protein: protein * 0.8,
-        cars: carbs * 0.8,
-        calories: bmr * 0.8
+        fat: (fat * 0.8).round(1),
+        protein: (protein * 0.8).round(1),
+        carbs: (carbs * 0.8).round(1),
+        calories: (bmr * 0.8).round
       }
     end
     goal

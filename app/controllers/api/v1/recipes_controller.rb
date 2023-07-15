@@ -71,6 +71,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     else
       render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
     end
+    update_goal
   end
 
   def index_ingredients
@@ -137,4 +138,20 @@ class Api::V1::RecipesController < Api::V1::BaseController
     # end
     # suggested_recipes
   # end
+
+  def update_goal
+    #goal = @current_user.goals.last
+    goal = User.last.goals.last
+    calorie_meals = goal.meals.map do |meal|
+      meal.recipe.total_calories / meal.recipe.portion * meal.portion
+    end
+    fat_meals = goal.meals.map { |meal| meal.recipe.fat / meal.recipe.portion * meal.portion }
+    protein_meals = goal.meals.map { |meal| meal.recipe.protein / meal.recipe.portion * meal.portion }
+    carbs_meals = goal.meals.map { |meal| meal.recipe.carbs / meal.recipe.portion * meal.portion }
+    goal.current_fat = fat_meals.sum.round(1)
+    goal.current_protein = protein_meals.sum.round(1)
+    goal.current_carbs = carbs_meals.sum.round(1)
+    goal.current_calorie = calorie_meals.sum
+    goal.save
+  end
 end
