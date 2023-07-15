@@ -8,4 +8,5 @@ class User < ApplicationRecord
 
   validates :username, uniqueness: true
   validates :gender, inclusion: { in: %w(m f) }
+  validates :target, inclusion: { in: %w(lose sustain gain) }
 end
