@@ -4,6 +4,7 @@ class UserSerializer < ActiveModel::Serializer
   def badges
     object.achievements.map do |a|
       {
+        id: a.badge.id ,
         name: a.badge.name ,
         image: a.badge.badge_img ,
         description: a.badge.description ,
