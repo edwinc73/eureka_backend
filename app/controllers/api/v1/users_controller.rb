@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  def show
+  def profile
     # @user = @current_user
     @user = User.last
     render json: @user, serializer: UserSerializer
