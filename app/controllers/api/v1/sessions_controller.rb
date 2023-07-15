@@ -1,5 +1,7 @@
+require_dependency 'api/v1/base_controller'
+
 class Api::V1::SessionsController < Api::V1::BaseController
-  skip_before_action :verify_request, only: [:login]
+  skip_before_action :verify_request
 
   def login
     user = find_user
@@ -18,6 +20,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
     app_secret = Rails.application.credentials.dig(:wechat, :app_secret)
     url = "https://api.weixin.qq.com/sns/jscode2session?appid=#{app_id}&secret=#{app_secret}&js_code=#{code}&grant_type=authorization_code"
     response = RestClient.get(url)
+    puts "response #{response}"
     JSON.parse(response.body)
   end
 
