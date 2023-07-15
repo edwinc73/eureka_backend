@@ -1,5 +1,5 @@
 class RecipeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at, :user_favourite
+  attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at, :user_favourite, :calories_per_100g, :nutritious_per_100g
   has_many :ingredients, if: -> { instance_options[:show] }
   has_many :reviews, if: -> { instance_options[:show] }
 
@@ -30,6 +30,10 @@ class RecipeSerializer < ActiveModel::Serializer
         updated_at: review.created_at.strftime("%Y-%m-%d")
       }
     end
+  end
+
+  def calories_per_100g
+    calories = (object.total_calories/object.portion).round
   end
 
   def ingredients
@@ -73,6 +77,31 @@ class RecipeSerializer < ActiveModel::Serializer
         carbs: carbs.sum,
         fiber: fiber.sum,
         sodium: sodium.sum.round
+      }
+    end
+  end
+
+  def nutritious_per_100g
+    if object.preps.empty? || object.seed_data == false
+      {
+        fat: (object.fat / object.portion).round(1),
+        protein: (object.protein / object.portion).round(1),
+        carbs: (object.carbs / object.portion).round(1),
+        fiber: (object.fiber / object.portion).round(1),
+        sodium: (object.sodium / object.portion).round
+      }
+    else
+      fat = object.preps.map { |i| i.portion * i.ingredient.fats }
+      protein = object.preps.map { |i| i.portion * i.ingredient.proteins }
+      carbs = object.preps.map { |i| i.portion * i.ingredient.carbs }
+      fiber = object.preps.map { |i| i.portion * i.ingredient.fiber }
+      sodium = object.preps.map { |i| i.portion * i.ingredient.sodium }
+      {
+        fat: (fat.sum / object.portion).round(1),
+        protein: (protein.sum / object.portion).round(1),
+        carbs: (carbs.sum / object.portion).round(1),
+        fiber: (fiber.sum / object.portion).round(1),
+        sodium: (sodium.sum / object.portion).round
       }
     end
   end
