@@ -7,9 +7,9 @@ class Api::V1::GoalsController < Api::V1::BaseController
     protein_meals = @goal.meals.map { |meal| meal.recipe.protein / meal.recipe.portion * meal.portion }
     carbs_meals = @goal.meals.map { |meal| meal.recipe.carbs / meal.recipe.portion * meal.portion }
     @current_nutrition = {
-      current_fat: fat_meals.sum.round,
-      current_protein: protein_meals.sum.round,
-      current_carb: carbs_meals.sum.round
+      current_fat: fat_meals.sum.round(1),
+      current_protein: protein_meals.sum.round(1),
+      current_carb: carbs_meals.sum.round(1)
     }
   end
 
