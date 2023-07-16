@@ -12,8 +12,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def show
-    # specific seed whose preps don't match the seed data need to update
-    if @recipe.seed_data? && @recipe.preps.present?
+    # recipes which preps don't match the seed data need to update
+    if @recipe.preps.present?
       update_data
     end
     render json: @recipe, serializer: RecipeSerializer, show: true
@@ -21,7 +21,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def create
     @recipe = Recipe.new(recipe_params)
-    @recipe.created_by_id = User.last.id # @current_user.id
+    @recipe.created_by = User.last # @current_user.id
     if @recipe.save
       render json: @recipe, status: :created
     else
@@ -34,12 +34,17 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def update
     # need authorization: only
+    @recipe.update(recipe_params)
+    if @recipe.save
+      render json: @recipe, status: :created
+    else
+      render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def upload_img
     photo = params[:photos]
     @recipe.photos.attach(photo)
-    @recipe.save!
     if @recipe.save
       render json: { message: 'Image uploaded successfully' }
     else

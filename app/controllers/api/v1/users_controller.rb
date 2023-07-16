@@ -8,7 +8,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   def update
     # @user = @current_user
     @user = User.last
-    if @user.update(user_params)
+    @user.update(user_params)
+    if @user.save
       render json: { msg: 'user information changed' }
     else
       render_error
