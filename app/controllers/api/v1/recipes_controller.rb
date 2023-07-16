@@ -14,13 +14,21 @@ class Api::V1::RecipesController < Api::V1::BaseController
   def show
     # specific seed whose preps don't match the seed data need to update
     if @recipe.seed_data? && @recipe.preps.present?
-      update_seed_data
+      update_data
     end
     render json: @recipe, serializer: RecipeSerializer, show: true
   end
 
   def create
-
+    @recipe = Recipe.new(recipe_params)
+    if @recipe.save
+      render json: @recipe, status: :created
+    else
+      render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
+    end
+    if params[:ingredients].present?
+      create_preps(@recipe)
+    end
   end
 
   def update
@@ -90,7 +98,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :instructions, :total_calories, :category, :fat, :protein, :carbs, :fiber, :sodium)
+    params.require(:recipe).permit(:name, :description, :instructions, :total_calories, :category, :fat, :protein, :carbs, :fiber, :sodium, :portion)
   end
 
   def review_params
@@ -105,7 +113,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     end
   end
 
-  def update_seed_data
+  def update_data
     ingredient_calories = @recipe.preps.map do |ingredient|
       ingredient.portion * ingredient.ingredient.calories
     end
@@ -154,4 +162,28 @@ class Api::V1::RecipesController < Api::V1::BaseController
     goal.current_calorie = calorie_meals.sum
     goal.save
   end
+
+  def create_preps(recipe)
+    ingredients = params[:ingredients]
+    # ingredients = {
+      # beef: { name: "beef", portion: 1 },
+      # rice: { name: "rice", portion: 1 },
+      # broccoli: { name: "Broccoli", portion: 1 }
+    # }
+    ingredients.values.each do |i|
+      ingredient = Recipe.find_by(name: i[:name])
+      portion = i[:portion]
+      prep = Prep.new(
+        portion: portion,
+        ingredient: ingredient,
+        recipe: recipe
+      )
+      if prep.save
+        render json: prep, status: :created
+      else
+        render json: { errors: prep.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+  end
+
 end
