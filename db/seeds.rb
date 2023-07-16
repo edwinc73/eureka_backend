@@ -473,5 +473,18 @@ User.last.goals.last.meals.destroy_all
   )
 end
 
-Badge.create!(name: "straving", description: "Didn't gain any calories for the whole day")
-Achievement.create!(user: User.last, badge: Badge.first)
+Badge.create!(name: "Starving", description: "Didn't gain any calories for the whole day")
+Badge.create!(name: "Carbo King", description: "Eat 300g of carbs in one meal")
+Badge.create!(name: "Weight Watcher", description: "Awarded to users who successfully achieve their weight loss or maintenance goals.")
+Badge.create!(name: "Healthy Eater", description: "Awarded to users who consistently make healthy food choices.")
+Badge.create!(name: "Meal Designer", description: "Awarded to users who add four meals in one day for better calorie control")
+Badge.create!(name: "Nutrition Expert", description: "Awarded to users who demonstrate a good understanding of nutrition and create a healthy recipe.")
+Badge.create!(name: "Goal Achiever", description: "Awarded to users who successfully achieve 10 times daily goal")
+Badge.create!(name: "Badge Master", description: "Awarded to users who successfully give 5 badge")
+Badge.create!(name: "Sugar-Free Champion", description: "Awarded to users who successfully reduce their intake of sugary foods and beverages.")
+Badge.create!(name: "Plate Balancer", description: "Awarded to users who create well-balanced meals with a variety of nutrients.")
+Badge.create!(name: "Eureka Chef", description: " Awarded to users who create five new recipes.")
+
+Badge.all.each do |badge|
+  Achievement.create!(user: User.last, badge: badge)
+end

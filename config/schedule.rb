@@ -18,11 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-# every 1.minute do
-#every 1.day, at: '12:00 am' do
-  # rake 'goals:create_for_users'
-# end
 
-every 1.minute do
-  p "abc"
+every 1.day, at: '12:00 am' do
+  rake "goals:create_for_users"
 end

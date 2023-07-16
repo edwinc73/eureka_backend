@@ -72,10 +72,10 @@ class RecipeSerializer < ActiveModel::Serializer
       fiber = object.preps.map { |i| i.portion * i.ingredient.fiber }
       sodium = object.preps.map { |i| i.portion * i.ingredient.sodium }
       {
-        fat: fat.sum,
-        protein: protein.sum,
-        carbs: carbs.sum,
-        fiber: fiber.sum,
+        fat: fat.sum.round(1),
+        protein: protein.sum.round(1),
+        carbs: carbs.sum.round(1),
+        fiber: fiber.sum.round(1),
         sodium: sodium.sum.round
       }
     end

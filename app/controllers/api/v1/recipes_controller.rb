@@ -117,11 +117,11 @@ class Api::V1::RecipesController < Api::V1::BaseController
     sodium = @recipe.preps.map { |i| i.portion * i.ingredient.sodium }
     @recipe.update(
       total_calories: ingredient_calories.sum.round,
-      fat: fat.sum,
-      protein: protein.sum,
-      carbs: carbs.sum,
-      fiber: fiber.sum,
-      sodium: sodium.sum,
+      fat: fat.sum.round(1),
+      protein: protein.sum.round(1),
+      carbs: carbs.sum.round(1),
+      fiber: fiber.sum.round(1),
+      sodium: sodium.sum.round,
       portion: ingredient_portion.sum,
       seed_data: false
     )
