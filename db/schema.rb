@@ -132,8 +132,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
     t.float "portion"
     t.string "photo"
     t.boolean "seed_data"
+    t.bigint "created_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_recipes_on_created_by_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -169,6 +171,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_132936) do
   add_foreign_key "meals", "recipes"
   add_foreign_key "preps", "ingredients"
   add_foreign_key "preps", "recipes"
+  add_foreign_key "recipes", "users", column: "created_by_id"
   add_foreign_key "reviews", "recipes"
   add_foreign_key "reviews", "users"
 end

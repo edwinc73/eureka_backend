@@ -14,6 +14,7 @@ class CreateRecipes < ActiveRecord::Migration[7.0]
       t.float :portion
       t.string :photo
       t.boolean :seed_data
+      t.references :created_by, null: true, foreign_key: { to_table: :users }
 
       t.timestamps
     end

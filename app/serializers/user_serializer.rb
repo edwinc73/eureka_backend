@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :age, :weight, :height, :gender, :goal_weight, :badges
+  attributes :id, :username, :age, :weight, :height, :gender, :goal_weight, :badges, :dishes
 
   def badges
     object.achievements.map do |a|

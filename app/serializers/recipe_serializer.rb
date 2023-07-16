@@ -1,5 +1,5 @@
 class RecipeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at, :user_favourite, :calories_per_100g, :nutritious_per_100g
+  attributes :id, :name, :description, :instructions, :total_calories, :portion, :category, :nutritious, :photos, :rating, :created_at, :updated_at, :created_by, :user_favourite, :calories_per_100g, :nutritious_per_100g
   has_many :ingredients, if: -> { instance_options[:show] }
   has_many :reviews, if: -> { instance_options[:show] }
 
@@ -127,4 +127,5 @@ class RecipeSerializer < ActiveModel::Serializer
     # user = @current_user.id
     User.last.recipes.count { |x| x.id == object.id } == 1
   end
+
 end

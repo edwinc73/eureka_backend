@@ -21,6 +21,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def create
     @recipe = Recipe.new(recipe_params)
+    @recipe.created_by_id = User.last.id # @current_user.id
     if @recipe.save
       render json: @recipe, status: :created
     else
@@ -32,7 +33,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def update
-
+    # need authorization: only
   end
 
   def upload_img
