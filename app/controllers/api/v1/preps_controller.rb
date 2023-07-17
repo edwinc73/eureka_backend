@@ -23,7 +23,7 @@ class Api::V1::PrepsController < Api::V1::BaseController
         recipe: @recipe
       )
       if prep.save
-        render json: prep, status: :created
+        render json: { message: "Ingredient added successfully" }
       else
         render json: { errors: prep.errors.full_messages }, status: :unprocessable_entity
       end
