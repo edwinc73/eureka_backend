@@ -4,13 +4,21 @@ class Api::V1::GoalsController < Api::V1::BaseController
   def show
     # @goal = @current_user.goals.last
     @goal = User.last.goals.last
+    render json: @goal, serializer: GoalSerializer
   end
 
   def index
     # @user = @current_user
     @user = User.last
     @goals = @user.goals.all
-    @weekly_goals = @goals.last(7)
+    render json: @goals, each_serializer: GoalSerializer
+  end
+
+  def weekly_goals
+    # @user = @current_user.goals
+    goals = User.last.goals
+    @weekly_goals = goals.last(7)
+    render json: @weekly_goals, each_serializer: GoalSerializer
   end
 
   def update

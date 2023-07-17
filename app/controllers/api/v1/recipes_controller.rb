@@ -122,10 +122,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def update_data(recipe)
-    ingredient_calories = recipe.preps.map do |ingredient|
-      ingredient.portion * ingredient.ingredient.calories
-    end
     ingredient_portion = recipe.preps.map { |i| i.portion }
+    ingredient_calories = recipe.preps.map {|i| i.portion * i.ingredient.calories}
     fat = recipe.preps.map { |i| i.portion * i.ingredient.fats }
     protein = recipe.preps.map { |i| i.portion * i.ingredient.proteins }
     carbs = recipe.preps.map { |i| i.portion * i.ingredient.carbs }
