@@ -1,6 +1,6 @@
 class Api::V1::MealsController < Api::V1::BaseController
   def index
-    current_goal = User.first.goals.last # @current_user.goals.last
+    current_goal = User.last.goals.last # @current_user.goals.last
     @meals = current_goal.meals
     render json: @meals, each_serializer: MealSerializer
   end

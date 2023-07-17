@@ -13,8 +13,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def show
     # recipes which preps don't match the seed data need to update
-    if @recipe.preps.present?
-      update_data
+    if @recipe.preps.present? && @recipe.seed_data?
+      update_data(@recipe)
     end
     render json: @recipe, serializer: RecipeSerializer, show: true
   end
@@ -29,6 +29,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
     end
     if params[:ingredients].present?
       create_preps(@recipe)
+      @recipe.seed_data == true
+      @recipe.save
     end
   end
 
@@ -119,17 +121,17 @@ class Api::V1::RecipesController < Api::V1::BaseController
     end
   end
 
-  def update_data
-    ingredient_calories = @recipe.preps.map do |ingredient|
+  def update_data(recipe)
+    ingredient_calories = recipe.preps.map do |ingredient|
       ingredient.portion * ingredient.ingredient.calories
     end
-    ingredient_portion = @recipe.preps.map { |i| i.portion }
-    fat = @recipe.preps.map { |i| i.portion * i.ingredient.fats }
-    protein = @recipe.preps.map { |i| i.portion * i.ingredient.proteins }
-    carbs = @recipe.preps.map { |i| i.portion * i.ingredient.carbs }
-    fiber = @recipe.preps.map { |i| i.portion * i.ingredient.fiber }
-    sodium = @recipe.preps.map { |i| i.portion * i.ingredient.sodium }
-    @recipe.update(
+    ingredient_portion = recipe.preps.map { |i| i.portion }
+    fat = recipe.preps.map { |i| i.portion * i.ingredient.fats }
+    protein = recipe.preps.map { |i| i.portion * i.ingredient.proteins }
+    carbs = recipe.preps.map { |i| i.portion * i.ingredient.carbs }
+    fiber = recipe.preps.map { |i| i.portion * i.ingredient.fiber }
+    sodium = recipe.preps.map { |i| i.portion * i.ingredient.sodium }
+    recipe.update(
       total_calories: ingredient_calories.sum.round,
       fat: fat.sum.round(1),
       protein: protein.sum.round(1),
@@ -139,7 +141,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
       portion: ingredient_portion.sum,
       seed_data: false
     )
-    @recipe.save
+    recipe.save
   end
 
   # def filter_recipes_by_bmi(bmi)
