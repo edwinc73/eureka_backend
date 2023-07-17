@@ -123,6 +123,15 @@ class RecipeSerializer < ActiveModel::Serializer
     object.updated_at.strftime("%Y-%m-%d")
   end
 
+  def created_by
+    id = object.created_by_id
+    if id.present?
+      User.find(id).username
+    else
+      "admin"
+    end
+  end
+
   def user_favourite
     # user = @current_user.id
     User.last.recipes.count { |x| x.id == object.id } == 1
