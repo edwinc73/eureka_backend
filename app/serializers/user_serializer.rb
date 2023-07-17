@@ -12,4 +12,8 @@ class UserSerializer < ActiveModel::Serializer
     end
   end
 
+  def dishes
+    Recipe.where(created_by_id: object.id)
+  end
+
 end
