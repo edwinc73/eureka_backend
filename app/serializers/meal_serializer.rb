@@ -1,5 +1,5 @@
 class MealSerializer < ActiveModel::Serializer
-  attributes :id, :name, :recipe, :recipe_nutritious_per_100g
+  attributes :id, :name, :portion, :recipe, :recipe_nutritious_per_100g
   belongs_to :goal
 
   def recipe_nutritious_per_100g
