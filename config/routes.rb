@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get 'profile', to: 'users#profile'
       get 'suggestion', to: 'recipes#suggestion'
       resources :goals, only: %i[show index update]
+      get 'weekly_goals', to: 'goals#weekly_goals'
       resources :recipes, only: %i[show create index update] do
         member do
           post 'add_review'
