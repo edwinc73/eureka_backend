@@ -12,25 +12,41 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def show
-    # specific seed whose preps don't match the seed data need to update
-    if @recipe.seed_data? && @recipe.preps.present?
-      update_seed_data
+    # recipes which preps don't match the seed data need to update
+    if @recipe.preps.present? && @recipe.seed_data?
+      update_data(@recipe)
     end
     render json: @recipe, serializer: RecipeSerializer, show: true
   end
 
   def create
-
+    @recipe = Recipe.new(recipe_params)
+    @recipe.created_by = User.last # @current_user.id
+    if @recipe.save
+      render json: @recipe, status: :created
+    else
+      render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
+    end
+    if params[:ingredients].present?
+      create_preps(@recipe)
+      @recipe.seed_data == true
+      @recipe.save
+    end
   end
 
   def update
-
+    # need authorization: only
+    @recipe.update(recipe_params)
+    if @recipe.save
+      render json: @recipe, status: :created
+    else
+      render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def upload_img
     photo = params[:photos]
     @recipe.photos.attach(photo)
-    @recipe.save!
     if @recipe.save
       render json: { message: 'Image uploaded successfully' }
     else
@@ -90,7 +106,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :instructions, :total_calories, :category, :fat, :protein, :carbs, :fiber, :sodium)
+    params.require(:recipe).permit(:name, :description, :instructions, :total_calories, :category, :fat, :protein, :carbs, :fiber, :sodium, :portion)
   end
 
   def review_params
@@ -105,27 +121,27 @@ class Api::V1::RecipesController < Api::V1::BaseController
     end
   end
 
-  def update_seed_data
-    ingredient_calories = @recipe.preps.map do |ingredient|
+  def update_data(recipe)
+    ingredient_calories = recipe.preps.map do |ingredient|
       ingredient.portion * ingredient.ingredient.calories
     end
-    ingredient_portion = @recipe.preps.map { |i| i.portion }
-    fat = @recipe.preps.map { |i| i.portion * i.ingredient.fats }
-    protein = @recipe.preps.map { |i| i.portion * i.ingredient.proteins }
-    carbs = @recipe.preps.map { |i| i.portion * i.ingredient.carbs }
-    fiber = @recipe.preps.map { |i| i.portion * i.ingredient.fiber }
-    sodium = @recipe.preps.map { |i| i.portion * i.ingredient.sodium }
-    @recipe.update(
+    ingredient_portion = recipe.preps.map { |i| i.portion }
+    fat = recipe.preps.map { |i| i.portion * i.ingredient.fats }
+    protein = recipe.preps.map { |i| i.portion * i.ingredient.proteins }
+    carbs = recipe.preps.map { |i| i.portion * i.ingredient.carbs }
+    fiber = recipe.preps.map { |i| i.portion * i.ingredient.fiber }
+    sodium = recipe.preps.map { |i| i.portion * i.ingredient.sodium }
+    recipe.update(
       total_calories: ingredient_calories.sum.round,
-      fat: fat.sum,
-      protein: protein.sum,
-      carbs: carbs.sum,
-      fiber: fiber.sum,
-      sodium: sodium.sum,
+      fat: fat.sum.round(1),
+      protein: protein.sum.round(1),
+      carbs: carbs.sum.round(1),
+      fiber: fiber.sum.round(1),
+      sodium: sodium.sum.round,
       portion: ingredient_portion.sum,
       seed_data: false
     )
-    @recipe.save
+    recipe.save
   end
 
   # def filter_recipes_by_bmi(bmi)
@@ -154,4 +170,28 @@ class Api::V1::RecipesController < Api::V1::BaseController
     goal.current_calorie = calorie_meals.sum
     goal.save
   end
+
+  def create_preps(recipe)
+    ingredients = params[:ingredients]
+    # ingredients = {
+      # beef: { name: "beef", portion: 1 },
+      # rice: { name: "rice", portion: 1 },
+      # broccoli: { name: "Broccoli", portion: 1 }
+    # }
+    ingredients.values.each do |i|
+      ingredient = Recipe.find_by(name: i[:name])
+      portion = i[:portion]
+      prep = Prep.new(
+        portion: portion,
+        ingredient: ingredient,
+        recipe: recipe
+      )
+      if prep.save
+        render json: { message: "Ingredient added successfully" }
+      else
+        render json: { errors: prep.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+  end
+
 end
