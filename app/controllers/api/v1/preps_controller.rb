@@ -32,18 +32,18 @@ class Api::V1::PrepsController < Api::V1::BaseController
     def destroy
       @prep.destroy
       render json: { message: "Ingredient deleted" }
-      @recipe.seed_data == true
+      @recipe.seed_data = true
       @recipe.save
     end
 
     def update
       @prep.update(prep_params)
       if @prep.save
-        render json: @prep, status: :created
+        render json: {message: "Ingredient udated" }
       else
         render json: { errors: @prep.errors.full_messages }, status: :unprocessable_entity
       end
-      @recipe.seed_data == true
+      @recipe.seed_data = true
       @recipe.save
     end
 

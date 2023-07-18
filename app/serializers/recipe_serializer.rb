@@ -86,7 +86,9 @@ class RecipeSerializer < ActiveModel::Serializer
   end
 
   def nutritious_per_100g
-    if object.preps.empty? || object.seed_data == false
+    if object.portion == nil
+      "null"
+    elsif object.preps.empty? || object.seed_data == false
       {
         fat: (object.fat / object.portion).round(1),
         protein: (object.protein / object.portion).round(1),

@@ -22,15 +22,14 @@ class Api::V1::RecipesController < Api::V1::BaseController
   def create
     @recipe = Recipe.new(recipe_params)
     @recipe.created_by_id = User.last.id # @current_user.id
+    if params[:ingredients].present?
+      create_preps(@recipe)
+      update_data(@recipe)
+    end
     if @recipe.save
       render json: { message: 'Recipe create successfully' }
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
-    end
-    if params[:ingredients].present?
-      create_preps(@recipe)
-      update_data(@recipe)
-      @recipe.save
     end
   end
 
