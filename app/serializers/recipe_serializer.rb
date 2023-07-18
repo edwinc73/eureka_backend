@@ -33,7 +33,11 @@ class RecipeSerializer < ActiveModel::Serializer
   end
 
   def calories_per_100g
-    calories = (object.total_calories/object.portion).round
+    if object.total_calories.present?
+      calories = (object.total_calories / object.portion).round
+    else
+      "null"
+    end
   end
 
   def ingredients
