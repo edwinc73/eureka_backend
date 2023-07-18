@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       resources :meals, only: %i[index destroy]
       resources :preps, only: %i[show index destroy update]
       resources :favourite_recipes, only: %i[index]
-      get 'ingredients', to: 'recipes#index_ingredients'
+      get 'ingredients', to: 'ingredients#index'
     end
   end
 end

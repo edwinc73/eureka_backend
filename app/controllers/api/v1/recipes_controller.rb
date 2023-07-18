@@ -1,7 +1,7 @@
 class Api::V1::RecipesController < Api::V1::BaseController
-  before_action :set_recipe, only: %i[show update create upload_img add_review add_to_goal]
+  before_action :set_recipe, only: %i[show update upload_img add_review add_to_goal]
   def index
-    #params[:query] = "salad"
+    # params[:query] = "salad"
     if params[:query].present?
       search_query = "%#{params[:query]}%"
       @recipes = Recipe.where('LOWER(name) LIKE LOWER(?)', search_query)
@@ -23,13 +23,13 @@ class Api::V1::RecipesController < Api::V1::BaseController
     @recipe = Recipe.new(recipe_params)
     @recipe.created_by_id = User.last.id # @current_user.id
     if @recipe.save
-      render json: @recipe, status: :created
+      render json: { message: 'Recipe create successfully' }
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
     end
     if params[:ingredients].present?
       create_preps(@recipe)
-      @recipe.seed_data == true
+      update_data(@recipe)
       @recipe.save
     end
   end
@@ -38,7 +38,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     # need authorization: only
     @recipe.update(recipe_params)
     if @recipe.save
-      render json: @recipe, status: :created
+      render json: { message: 'Recipe update successfully' }
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
     end
@@ -88,11 +88,6 @@ class Api::V1::RecipesController < Api::V1::BaseController
       render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
     end
     update_goal
-  end
-
-  def index_ingredients
-    ingredients = Ingredient.all.group_by(&:category)
-    render json: ingredients, each_serializer: IngredientSerializer
   end
 
   private
@@ -172,23 +167,20 @@ class Api::V1::RecipesController < Api::V1::BaseController
   def create_preps(recipe)
     ingredients = params[:ingredients]
     # ingredients = {
-      # beef: { name: "beef", portion: 1 },
-      # rice: { name: "rice", portion: 1 },
-      # broccoli: { name: "Broccoli", portion: 1 }
+      # beef: { id: 1, portion: 1 },
+      # rice: { id: 2, portion: 1 },
+      # broccoli: { id: 3, portion: 1 }
     # }
     ingredients.values.each do |i|
-      ingredient = Recipe.find_by(name: i[:name])
-      portion = i[:portion]
+      id = i["id"]
+      ingredient = Ingredient.find(id)
+      portion = i["portion"]
       prep = Prep.new(
         portion: portion,
         ingredient: ingredient,
         recipe: recipe
       )
-      if prep.save
-        render json: { message: "Ingredient added successfully" }
-      else
-        render json: { errors: prep.errors.full_messages }, status: :unprocessable_entity
-      end
+      prep.save!
     end
   end
 
