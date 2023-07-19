@@ -21,7 +21,7 @@ class RecipeSerializer < ActiveModel::Serializer
   end
 
   def reviews
-    object.reviews.map do |review|
+    object.reviews.order(created_at: :desc).map do |review|
       {
         user: review.username,
         rating: review.rating,
