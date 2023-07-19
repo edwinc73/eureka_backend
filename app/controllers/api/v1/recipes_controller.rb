@@ -100,7 +100,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :instructions, :total_calories, :category, :fat, :protein, :carbs, :fiber, :sodium, :portion)
+    params.require(:recipe).permit(:name, :description, :instructions, :category)
   end
 
   def review_params

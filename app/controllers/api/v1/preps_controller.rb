@@ -15,7 +15,7 @@ class Api::V1::PrepsController < Api::V1::BaseController
       # broccoli: { name: "Broccoli", portion: 1 }
     # }
     ingredients.values.each do |i|
-      ingredient = Recipe.find_by(name: i[:name])
+      ingredient = Recipe.find(id: i["id"])
       portion = i[:portion]
       prep = Prep.new(
         portion: portion,
@@ -23,6 +23,8 @@ class Api::V1::PrepsController < Api::V1::BaseController
         recipe: @recipe
       )
       if prep.save
+        update_data(@recipe)
+        @recipe.save
         render json: { message: "Ingredient added successfully" }
       else
         render json: { errors: prep.errors.full_messages }, status: :unprocessable_entity
@@ -32,7 +34,7 @@ class Api::V1::PrepsController < Api::V1::BaseController
     def destroy
       @prep.destroy
       render json: { message: "Ingredient deleted" }
-      @recipe.seed_data = true
+      update_data(@recipe)
       @recipe.save
     end
 
@@ -43,7 +45,7 @@ class Api::V1::PrepsController < Api::V1::BaseController
       else
         render json: { errors: @prep.errors.full_messages }, status: :unprocessable_entity
       end
-      @recipe.seed_data = true
+      update_data(@recipe)
       @recipe.save
     end
 
@@ -63,6 +65,27 @@ class Api::V1::PrepsController < Api::V1::BaseController
 
   def prep_params
     params.require(:prep).permit(:portion)
+  end
+
+  def update_data(recipe)
+    ingredient_portion = recipe.preps.map { |i| i.portion }
+    ingredient_calories = recipe.preps.map {|i| i.portion * i.ingredient.calories}
+    fat = recipe.preps.map { |i| i.portion * i.ingredient.fats }
+    protein = recipe.preps.map { |i| i.portion * i.ingredient.proteins }
+    carbs = recipe.preps.map { |i| i.portion * i.ingredient.carbs }
+    fiber = recipe.preps.map { |i| i.portion * i.ingredient.fiber }
+    sodium = recipe.preps.map { |i| i.portion * i.ingredient.sodium }
+    recipe.update(
+      total_calories: ingredient_calories.sum.round,
+      fat: fat.sum.round(1),
+      protein: protein.sum.round(1),
+      carbs: carbs.sum.round(1),
+      fiber: fiber.sum.round(1),
+      sodium: sodium.sum.round,
+      portion: ingredient_portion.sum,
+      seed_data: false
+    )
+    recipe.save
   end
 
 end
