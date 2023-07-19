@@ -15,13 +15,13 @@ Rails.application.routes.draw do
         member do
           post 'add_review'
           post 'upload_img'
+          resources :preps, only: %i[index destroy update]
         end
       end
       resources :favourite_recipes, only: %i[create]
       delete 'favourite_delete', to: 'favourite_recipes#cancel'
       post 'add_to_goal', to: 'recipes#add_to_goal'
       resources :meals, only: %i[index destroy]
-      resources :preps, only: %i[show index destroy update]
       resources :favourite_recipes, only: %i[index]
       get 'ingredients', to: 'ingredients#index'
     end
