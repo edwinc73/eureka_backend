@@ -14,6 +14,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     else
       render_error
     end
+    weight_watcher(@user)
   end
 
   private
@@ -26,4 +27,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: { errors: @user.errors.full_messages },
     status: :unprocessable_entity
   end
+
+  def weight_watcher(user)
+    if user.badges.count { |x| x.name == "Weight Watcher" } == 0
+      if user.weight == user.goal_weight
+        badge = Badge.find_by(name: "Weight Watcher")
+        Achievement.create(user: user, badge: badge)
+      end
+    end
+  end
+
 end

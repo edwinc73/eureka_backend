@@ -87,6 +87,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
       render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
     end
     update_goal
+    carbo_king(user, meal)
   end
 
   private
@@ -180,6 +181,15 @@ class Api::V1::RecipesController < Api::V1::BaseController
         recipe: recipe
       )
       prep.save!
+    end
+  end
+
+  def carbo_king(user, meal)
+    if user.badges.count { |x| x.name == "Carbo King"} == 0
+      if meal.recipe.carbs >= 150
+        badge = Badge.find_by(name: "Carbo King")
+        Achievement.create(user: user, badge: badge)
+      end
     end
   end
 
