@@ -27,7 +27,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
       update_data(@recipe)
     end
     if @recipe.save
-      render json: { message: 'Recipe create successfully' }
+      render json: { message: 'Recipe create successfully', recipe_id: @recipe.id }
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
     end
