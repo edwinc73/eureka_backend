@@ -5,6 +5,7 @@ class CheckBadgeJob < ApplicationJob
     User.all.each do |user|
       check_starving(user)
       healthy_eater(user)
+      meal_designer(user)
     end
     # User.all.each do |user|
       # healthy_eater(user)
@@ -39,4 +40,14 @@ class CheckBadgeJob < ApplicationJob
     end
   end
 
+  def meal_designer(user)
+    if user.badges.count { |x| x.name == "Meal Designer" } == 0
+      meals = user.goals.last(7).map { |goal| goal.meals.size }
+      meals_number = meals.sum
+      if meals_number > 19
+        badge = Badge.find_by(name: "Meal Designer")
+        Achievement.create(user: user, badge: badge)
+      end
+    end
+  end
 end
