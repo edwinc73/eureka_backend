@@ -81,5 +81,5 @@ test:
 #
 production:
   <<: *default
-  database: eureka_backend_production
+  database: eureka_api_5808
   username: eureka_backend
