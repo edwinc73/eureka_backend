@@ -7,6 +7,7 @@ class CheckBadgeJob < ApplicationJob
       healthy_eater(user)
       meal_designer(user)
       goal_achiever(user)
+      sugar_free_champion(user)
     end
   end
 
@@ -57,6 +58,19 @@ class CheckBadgeJob < ApplicationJob
       achieve_goals = user.goals.count { |goal| goal.current_calorie <= goal.calorie_goal }
       if achieve_goals == 10
         badge = Badge.find_by(name: "Goal Achiever")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def sugar_free_champion(user)
+    if user.badges.count { |x| x.name == "Sugar-Free Champion" } == 0
+      low_carbs_meals = user.goals.last(7).map do |goal|
+        goal.meals.count { |meal| meal.recipe.carbs <= 15 }
+      end
+      if low_carbs_meals.sum > 10
+        badge = Badge.find_by(name: "Sugar-Free Champion")
         Achievement.create(user: user, badge: badge)
         badge_master(user)
       end
