@@ -83,4 +83,3 @@ production:
   <<: *default
   database: eureka_backend_production
   username: eureka_backend
-  password: <%= ENV["EUREKA_BACKEND_DATABASE_PASSWORD"] %>
