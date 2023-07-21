@@ -1,6 +1,7 @@
-namespace :goals do
-  desc "create goals for each user everyday"
-  task create_for_users: :environment do
+class CreateGoalsJob < ApplicationJob
+  queue_as :default
+
+  def perform
     User.all.each do |user|
       bmr = calculate_bmr(user)
       user_target = user.goal_weight - user.weight
@@ -20,7 +21,6 @@ namespace :goals do
   end
 
   private
-
   def calculate_bmr(user)
     bmr = 0
     if user.gender == 'm'
@@ -59,4 +59,5 @@ namespace :goals do
     end
     goal
   end
+
 end

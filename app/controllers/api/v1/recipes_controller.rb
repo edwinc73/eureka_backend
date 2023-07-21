@@ -25,6 +25,8 @@ class Api::V1::RecipesController < Api::V1::BaseController
     if params[:ingredients].present?
       create_preps(@recipe)
       update_data(@recipe)
+      nutrition_expert(@recipe)
+      plate_balancer(@recipe)
     end
     if @recipe.save
       render json: { message: 'Recipe create successfully', recipe_id: @recipe.id }
@@ -37,7 +39,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     # need authorization: only
     @recipe.update(recipe_params)
     if @recipe.save
-      render json: { message: 'Recipe update successfully' }
+      render json: { message: 'Recipe update successfully'}
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
     end
@@ -87,6 +89,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
       render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
     end
     update_goal
+    carbo_king(user, meal)
   end
 
   private
@@ -183,4 +186,67 @@ class Api::V1::RecipesController < Api::V1::BaseController
     end
   end
 
+  def carbo_king(user, meal)
+    if user.badges.count { |x| x.name == "Carbo King"} == 0
+      if meal.recipe.carbs >= 150
+        badge = Badge.find_by(name: "Carbo King")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def nutrition_expert(recipe)
+    user = User.last # @current_user
+    if user.badges.count { |x| x.name == "Nutrition Expert" } == 0
+      nutrient_ratio(recipe)
+      if (0.45..0.60).include?(carbs) &&
+        (0.25..0.45).include?(protein) &&
+        (0.15..0.25).include?(fat)&&
+        (25..30).include?(fiber)
+        badge = Badge.find_by(name: "Nutrition Expert")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def nutrient_ratio(recipe)
+    protein = recipe.protein * 4 / recipe.total_calories
+    fat = recipe.fat * 9 / recipe.total_calories
+    carbs = recipe.carbs * 4 / recipe.total_calories
+    fiber = recipe.fiber
+  end
+
+  def plate_balancer(recipe)
+    user = User.last # @current_user
+    if user.badges.count { |x| x.name == "Plate Balancer"} == 0
+      if recipe.fat? && recipe.protein? && recipe.carbs? && recipe.fiber? && recipe.sodium?
+        badge = Badge.find_by(name: "Plate Balancer")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def eureka_chef
+    user = User.last # @current_user
+    if user.badges.count { |x| x.name == "Eureka Chef" } == 0
+      id = user.id
+      if Recipe.all.count { |r| r.created_by_id == id } == 5
+        badge = Badge.find_by(name: "Eureka Chef")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def badge_master(user)
+    if user.badges.count { |x| x.name == "Badge Master" } == 0
+      if user.badges.count == 10
+        badge = Badge.find_by(name: "Badge Master")
+        Achievement.create(user: user, badge: badge)
+      end
+    end
+  end
 end
