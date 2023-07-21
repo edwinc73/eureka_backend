@@ -33,6 +33,16 @@ class Api::V1::UsersController < Api::V1::BaseController
       if user.weight == user.goal_weight
         badge = Badge.find_by(name: "Weight Watcher")
         Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def badge_master(user)
+    if user.badges.count { |x| x.name == "Badge Master" } == 0
+      if user.badges.count == 10
+        badge = Badge.find_by(name: "Badge Master")
+        Achievement.create(user: user, badge: badge)
       end
     end
   end

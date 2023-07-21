@@ -6,10 +6,8 @@ class CheckBadgeJob < ApplicationJob
       check_starving(user)
       healthy_eater(user)
       meal_designer(user)
+      goal_achiever(user)
     end
-    # User.all.each do |user|
-      # healthy_eater(user)
-    # end
   end
 
   private
@@ -19,6 +17,7 @@ class CheckBadgeJob < ApplicationJob
       if user.goals.last.current_calorie == 0
         badge = Badge.find_by(name: "Starving")
         Achievement.create(user: user, badge: badge)
+        badge_master(user)
       end
     end
   end
@@ -36,6 +35,7 @@ class CheckBadgeJob < ApplicationJob
         high_sodium_meals == 0
         badge = Badge.find_by(name: "Healthy Eater")
         Achievement.create(user: user, badge: badge)
+        badge_master(user)
       end
     end
   end
@@ -47,7 +47,29 @@ class CheckBadgeJob < ApplicationJob
       if meals_number > 19
         badge = Badge.find_by(name: "Meal Designer")
         Achievement.create(user: user, badge: badge)
+        badge_master(user)
       end
     end
   end
+
+  def goal_achiever(user)
+    if user.badges.count { |x| x.name == "Goal Achiever" } == 0
+      achieve_goals = user.goals.count { |goal| goal.current_calorie <= goal.calorie_goal }
+      if achieve_goals == 10
+        badge = Badge.find_by(name: "Goal Achiever")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def badge_master(user)
+    if user.badges.count { |x| x.name == "Badge Master" } == 0
+      if user.badges.count == 10
+        badge = Badge.find_by(name: "Badge Master")
+        Achievement.create(user: user, badge: badge)
+      end
+    end
+  end
+
 end
