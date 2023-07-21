@@ -26,9 +26,11 @@ class Api::V1::RecipesController < Api::V1::BaseController
       create_preps(@recipe)
       update_data(@recipe)
       nutrition_expert(@recipe)
+      plate_balancer(@recipe)
     end
     if @recipe.save
       render json: { message: 'Recipe create successfully', recipe_id: @recipe.id  }
+      eureka_chef
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
     end
@@ -190,7 +192,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
       if meal.recipe.carbs >= 150
         badge = Badge.find_by(name: "Carbo King")
         Achievement.create(user: user, badge: badge)
-        CheckBadgeJob.badge_master(user)
+        badge_master(user)
       end
     end
   end
@@ -205,7 +207,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
         (25..30).include?(fiber)
         badge = Badge.find_by(name: "Nutrition Expert")
         Achievement.create(user: user, badge: badge)
-        CheckBadgeJob.badge_master(user)
+        badge_master(user)
       end
     end
   end
@@ -215,6 +217,29 @@ class Api::V1::RecipesController < Api::V1::BaseController
     fat = recipe.fat * 9 / recipe.total_calories
     carbs = recipe.carbs * 4 / recipe.total_calories
     fiber = recipe.fiber
+  end
+
+  def plate_balancer(recipe)
+    user = User.last # @current_user
+    if user.badges.count { |x| x.name == "Plate Balancer"} == 0
+      if recipe.fat? && recipe.protein? && recipe.carbs? && recipe.fiber? && recipe.sodium?
+        badge = Badge.find_by(name: "Plate Balancer")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
+  end
+
+  def eureka_chef
+    user = User.last # @current_user
+    if user.badges.count { |x| x.name == "Eureka Chef" } == 0
+      id = user.id
+      if Recipe.all.count { |r| r.created_by_id == id } == 5
+        badge = Badge.find_by(name: "Eureka Chef")
+        Achievement.create(user: user, badge: badge)
+        badge_master(user)
+      end
+    end
   end
 
   def badge_master(user)
