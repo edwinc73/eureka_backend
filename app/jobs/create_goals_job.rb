@@ -1,5 +1,6 @@
 class CreateGoalsJob < ApplicationJob
-  queue_as :default
+  include Sidekiq::Worker
+  sidekiq_options queue: 'default', retry: false, schedule: { cron: '00 07 * * *' }
 
   def perform
     User.all.each do |user|
