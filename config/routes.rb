@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       resources :favourite_recipes, only: %i[create]
       delete 'favourite_delete', to: 'favourite_recipes#cancel'
       post 'add_to_goal', to: 'recipes#add_to_goal'
-      resources :meals, only: %i[index destroy]
+      resources :meals, only: %i[index show destroy]
       resources :favourite_recipes, only: %i[index]
       get 'ingredients', to: 'ingredients#index'
     end

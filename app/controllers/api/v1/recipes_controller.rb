@@ -28,17 +28,17 @@ class Api::V1::RecipesController < Api::V1::BaseController
     if params[:ingredients].present?
       create_preps(@recipe)
       update_data(@recipe)
-      nutrition_expert = nutrition_expert(@recipe)
+      #nutrition_expert = nutrition_expert(@recipe)
       plate_balancer = plate_balancer(@recipe)
     end
     if @recipe.save
       ec = eureka_chef
       render json: {
         message: 'Recipe create successfully',
-        recipe_id: @recipe.id,
         nutrition_expert_and_badge_master: nutrition_expert,
         plate_balancer_and_badge_master: plate_balancer,
-        eureka_chef_and_badge_master: ec
+        eureka_chef_and_badge_master: ec,
+        recipe_id: @recipe.id,
       }
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
@@ -216,10 +216,10 @@ class Api::V1::RecipesController < Api::V1::BaseController
     user = User.last # @current_user
     if user.badges.count { |x| x.name == "Nutrition Expert" } == 0
       nutrient_ratio(recipe)
-      if (0.45..0.60).include?(carbs) &&
-        (0.25..0.45).include?(protein) &&
-        (0.15..0.25).include?(fat)&&
-        (25..30).include?(fiber)
+      if (0.45..0.60).include?(nutrition[:carbs]) &&
+        (0.25..0.45).include?(nutrition[:protein]) &&
+        (0.15..0.25).include?(nutrition[:fat])&&
+        (25..30).include?(nutrition[:fiber])
         badge = Badge.find_by(name: "Nutrition Expert")
         Achievement.create(user: user, badge: badge)
         achieve = "1"
@@ -238,6 +238,12 @@ class Api::V1::RecipesController < Api::V1::BaseController
     fat = recipe.fat * 9 / recipe.total_calories
     carbs = recipe.carbs * 4 / recipe.total_calories
     fiber = recipe.fiber
+    nutrition = {
+      protein: protein,
+      fat: fat,
+      carbs: carbs,
+      fiber: fiber
+    }
   end
 
   def plate_balancer(recipe)

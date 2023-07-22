@@ -1,5 +1,15 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :image, :age, :weight, :height, :gender, :goal_weight, :badges, :dishes
+  attributes :id, :username, :image, :age, :weight, :height, :gender, :bmi, :goal_weight, :badges, :dishes
+
+  def bmi
+    if object.height.present?
+      height_in_meters = object.height.to_f / 100
+      bmi = object.weight.to_f / (height_in_meters * height_in_meters)
+      bmi.round(1)
+    else
+      nil
+    end
+  end
 
   def badges
     object.achievements.map do |a|
