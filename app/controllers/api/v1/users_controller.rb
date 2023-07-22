@@ -15,7 +15,7 @@ class Api::V1::UsersController < Api::V1::BaseController
       render json: {
         msg: 'user information changed',
         weight_watcher_and_badge_master: weight_watcher
-       }
+      }
     else
       render_error
     end
