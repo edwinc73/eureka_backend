@@ -748,6 +748,6 @@ Badge.create!(name: "Sugar-Free Champion", description: "Awarded to users who su
 Badge.create!(name: "Plate Balancer", description: "Awarded to users who create well-balanced meals with a variety of nutrients.", badge_img:"https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Plate_Balancer_qvpcr9.png")
 Badge.create!(name: "Eureka Chef", description: " Awarded to users who create five new recipes.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Eureka_Chef_ex1a0r.png")
 
-Badge.last(9).each do |badge|
+Badge.first(4).each do |badge|
   Achievement.create!(user: User.last, badge: badge)
 end
