@@ -8,13 +8,17 @@ class Api::V1::UsersController < Api::V1::BaseController
   def update
     # @user = @current_user
     @user = User.last
+    weight_watcher = "0"
     @user.update(user_params)
+    weight_watcher = weight_watcher(@user)
     if @user.save
-      render json: { msg: 'user information changed' }
+      render json: {
+        msg: 'user information changed',
+        weight_watcher_and_badge_master: weight_watcher
+       }
     else
       render_error
     end
-    weight_watcher(@user)
   end
 
   private
@@ -33,17 +37,28 @@ class Api::V1::UsersController < Api::V1::BaseController
       if user.weight == user.goal_weight
         badge = Badge.find_by(name: "Weight Watcher")
         Achievement.create(user: user, badge: badge)
-        badge_master(user)
+        achieve = "1"
+        achieve = badge_master(user)
+        return achieve
+      else
+        return "0"
       end
+    else
+      return "0"
     end
   end
 
   def badge_master(user)
     if user.badges.count { |x| x.name == "Badge Master" } == 0
-      if user.badges.count == 10
+      if user.badges.count == 5
         badge = Badge.find_by(name: "Badge Master")
         Achievement.create(user: user, badge: badge)
+        return "2"
+      else
+        return "1"
       end
+    else
+      return "1"
     end
   end
 

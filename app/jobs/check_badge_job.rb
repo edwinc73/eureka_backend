@@ -79,7 +79,7 @@ class CheckBadgeJob < ApplicationJob
 
   def badge_master(user)
     if user.badges.count { |x| x.name == "Badge Master" } == 0
-      if user.badges.count == 10
+      if user.badges.count == 5
         badge = Badge.find_by(name: "Badge Master")
         Achievement.create(user: user, badge: badge)
       end
