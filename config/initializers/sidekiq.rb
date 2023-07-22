@@ -1,7 +1,9 @@
-require 'sidekiq/cron'
+# config/initializers/sidekiq.rb
 
-schedule_file = "config/sidekiq_schedule.yml"
+Sidekiq.configure_server do |config|
+  config.redis = { url: ENV['REDIS_URL'] || 'redis://localhost:6379' }
+end
 
-if File.exist?(schedule_file)
-  Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file)
+Sidekiq.configure_client do |config|
+  config.redis = { url: ENV['REDIS_URL'] || 'redis://localhost:6379' }
 end
