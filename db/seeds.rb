@@ -218,6 +218,8 @@ end
 
 30.times do
   username = Faker::Internet.username(specifier: 5..18)
+  avatar = ['dogs', 'sports', 'cars'].sample
+  image = Faker::LoremFlickr.image(size: "100x100", search_terms: [avatar])
   age = rand(15..60)
   weight = rand(35..100)
   height = rand(150..200)
@@ -226,6 +228,7 @@ end
   User.create!(
     username: username,
     age: age,
+    image: image,
     weight: weight,
     height: height,
     gender: gender,
@@ -734,7 +737,7 @@ User.last.goals.last.meals.destroy_all
 end
 
 Badge.create!(name: "Starving", description: "Didn't gain any calories for the whole day", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Starving_c76vsc.png")
-Badge.create!(name: "Carbo King", description: "Eat 300g of carbs in one meal", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Carbo_King_sf8dq3.png")
+Badge.create!(name: "Carbo King", description: "Eat 150g of carbs in one meal", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Carbo_King_sf8dq3.png")
 Badge.create!(name: "Weight Watcher", description: "Awarded to users who successfully achieve their weight loss or maintenance goals.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Weight_Watcher-1_apv0rv.png")
 Badge.create!(name: "Healthy Eater", description: "Awarded to users who consistently make healthy food choices.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Health_Eater_ne1oqs.png")
 Badge.create!(name: "Meal Designer", description: "Awarded to users who add 20 meals in one week.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Meal_Designer_ghivhl.png")
@@ -745,6 +748,6 @@ Badge.create!(name: "Sugar-Free Champion", description: "Awarded to users who su
 Badge.create!(name: "Plate Balancer", description: "Awarded to users who create well-balanced meals with a variety of nutrients.", badge_img:"https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Plate_Balancer_qvpcr9.png")
 Badge.create!(name: "Eureka Chef", description: " Awarded to users who create five new recipes.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Eureka_Chef_ex1a0r.png")
 
-Badge.all.each do |badge|
+Badge.last(9).each do |badge|
   Achievement.create!(user: User.last, badge: badge)
 end
