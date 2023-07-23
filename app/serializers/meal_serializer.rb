@@ -1,6 +1,18 @@
 class MealSerializer < ActiveModel::Serializer
-  attributes :id, :name, :portion, :recipe, :recipe_nutritious_per_100g
+  attributes :id, :name, :portion, :meal_nutritious, :recipe, :recipe_nutritious_per_100g
   belongs_to :goal
+
+  def meal_nutritious
+    recipe = object.recipe
+    {
+      meal_calories: (recipe.total_calories * object.portion / recipe.portion).round,
+      meal_fat: (recipe.fat * object.portion / recipe.portion).round(1),
+      meal_protein: (recipe.protein * object.portion / recipe.portion).round(1),
+      meal_carbs: (recipe.carbs * object.portion / recipe.portion).round(1),
+      meal_fiber: (recipe.fiber * object.portion / recipe.portion).round(1),
+      meal_sodium: (recipe.sodium * object.portion / recipe.portion).round
+    }
+  end
 
   def recipe_nutritious_per_100g
     recipe = object.recipe

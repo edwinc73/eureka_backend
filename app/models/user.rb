@@ -6,6 +6,4 @@ class User < ApplicationRecord
   has_many :favourite_recipes, dependent: :destroy
   has_many :recipes, through: :favourite_recipes
 
-  validates :username, uniqueness: true
-  validates :gender, inclusion: { in: %w(m f) }
 end
