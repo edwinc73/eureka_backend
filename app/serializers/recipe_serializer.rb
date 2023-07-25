@@ -24,6 +24,7 @@ class RecipeSerializer < ActiveModel::Serializer
     object.reviews.order(created_at: :desc).map do |review|
       {
         user: review.username,
+        user_img: review.user.image,
         rating: review.rating,
         content: review.content,
         created_at: review.created_at.strftime("%Y-%m-%d"),
