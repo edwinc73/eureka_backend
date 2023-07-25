@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post 'login', to: 'sessions#login', as: :login
       resources :users, only: %i[update]
       get 'profile', to: 'users#profile'
+      put 'fill_up_profile', to: 'users#fill_up_profile'
       post 'upload_avatar', to: 'users#upload_avatar'
       get 'suggestion', to: 'recipes#suggestion'
       resources :goals, only: %i[show index update]

@@ -3,7 +3,7 @@ class UserSerializer < ActiveModel::Serializer
 
   def image
     if object.avatar.attached?
-      object.avatar.service_url
+      object.avatar.url
     else
       object.image
     end
