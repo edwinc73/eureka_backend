@@ -1,15 +1,13 @@
 class Api::V1::FavouriteRecipesController < Api::V1::BaseController
   def index
-    # user = @current_user.id
-    user = User.last
+    user = @current_user
     @favorite_recipes = user.recipes
     render json: @favorite_recipes, each_serializer: RecipeSerializer
   end
 
   def create
     recipe = Recipe.find(params[:id])
-    # user = @current_user.id
-    user = User.last
+    user = @current_user
     user.recipes << recipe
     render json: { message: "Recipe added to favorites" }
   end

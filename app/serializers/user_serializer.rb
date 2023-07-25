@@ -1,6 +1,14 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :image, :age, :weight, :height, :gender, :bmi, :goal_weight, :badges, :dishes
 
+  def image
+    if object.avatar.attached?
+      object.avatar.service_url
+    else
+      object.image
+    end
+  end
+
   def bmi
     if object.height.present?
       height_in_meters = object.height.to_f / 100

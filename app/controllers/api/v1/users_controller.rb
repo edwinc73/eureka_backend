@@ -1,17 +1,15 @@
 class Api::V1::UsersController < Api::V1::BaseController
   def profile
-    # @user = @current_user
-    @user = User.last
+    @user = @current_user
     render json: @user, serializer: UserSerializer
   end
 
   def update
-    # @user = @current_user
-    @user = User.last
+    user = @current_user
     weight_watcher = "0"
-    @user.update(user_params)
-    weight_watcher = weight_watcher(@user)
-    if @user.save
+    user.update(user_params)
+    weight_watcher = weight_watcher(user)
+    if user.save
       render json: {
         msg: 'user information changed',
         weight_watcher_and_badge_master: weight_watcher
@@ -21,10 +19,22 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def upload_avatar
+    user = @current_user
+    image = params[:image]
+    user.avatar.attach(image)
+    if user.save
+      render json: { message: 'Image uploaded successfully' }
+    else
+      render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+
   private
 
   def user_params
-    params.require(:user).permit(:age, :weight, :height, :gender, :goal_weight)
+    params.require(:user).permit(:username, :age, :weight, :height, :gender, :goal_weight)
   end
 
   def render_error
