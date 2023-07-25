@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.integer :height
       t.string :gender
       t.float :goal_weight
+      t.string :open_id
 
       t.timestamps
     end

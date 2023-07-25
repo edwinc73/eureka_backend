@@ -21,7 +21,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 
   def create
     @recipe = Recipe.new(recipe_params)
-    @recipe.created_by_id = User.last.id # @current_user.id
+    @recipe.created_by_id = @current_user.id
     nutrition_expert = "0"
     plate_balancer = "0"
     ec = "0"
@@ -66,8 +66,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def suggestion
-    #user = @current_user
-    user = User.last
+    user = @current_user
     # height_in_meters = user.height.to_f / 100
     # bmi = user.weight.to_f / (height_in_meters * height_in_meters)
     # p bmi
@@ -78,8 +77,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def add_review
-    #user = @current_user
-    user = User.last
+    user = @current_user
     review = Review.new(review_params.merge(recipe: @recipe, user: user))
     if review.save
       render json: { message: "Review added successfully" }
@@ -89,8 +87,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def add_to_goal
-    #user = @current_user
-    user = User.last
+    user = @current_user
     goal = user.goals.last
     meal = Meal.new(meal_params.merge(goal: goal, recipe: @recipe))
     if meal.save
@@ -161,8 +158,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   # end
 
   def update_goal
-    #goal = @current_user.goals.last
-    goal = User.last.goals.last
+    goal = @current_user.goals.last
     calorie_meals = goal.meals.map do |meal|
       meal.recipe.total_calories / meal.recipe.portion * meal.portion
     end
@@ -213,7 +209,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def nutrition_expert(recipe)
-    user = User.last # @current_user
+    user = @current_user
     if user.badges.count { |x| x.name == "Nutrition Expert" } == 0
       nutrient_ratio(recipe)
       if (0.45..0.60).include?(nutrition[:carbs]) &&
@@ -247,7 +243,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def plate_balancer(recipe)
-    user = User.last # @current_user
+    user = @current_user
     if user.badges.count { |x| x.name == "Plate Balancer"} == 0
       if recipe.fat? && recipe.protein? && recipe.carbs? && recipe.fiber? && recipe.sodium?
         badge = Badge.find_by(name: "Plate Balancer")
@@ -264,7 +260,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   def eureka_chef
-    user = User.last # @current_user
+    user = @current_user
     if user.badges.count { |x| x.name == "Eureka Chef" } == 0
       id = user.id
       if Recipe.all.count { |r| r.created_by_id == id } == 5
