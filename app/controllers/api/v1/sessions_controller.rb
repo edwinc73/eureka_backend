@@ -1,13 +1,14 @@
 class Api::V1::SessionsController < Api::V1::BaseController
-  skip_before_action :verify_request
+  skip_before_action :verify_request, only: [:login]
 
   def login
-    user = find_user
-
+    user_info = find_user
+    user = user_info[:user]
     token = jwt_encode(user_id: user.id) # put user_id in payload
     render json: {
       headers: { "X-USER-TOKEN" => token },
-      user: user
+      user: user,
+      new_user: user_info[:new_user]
     }
   end
 
@@ -24,7 +25,16 @@ class Api::V1::SessionsController < Api::V1::BaseController
 
   def find_user # find or create user
     open_id = fetch_wx_open_id(params[:code])["openid"]
-    User.find_or_create_by(open_id: open_id)
+    if user = User.find_by(open_id: open_id)
+      new_user = false
+    else
+      user = User.create(open_id: open_id)
+      new_user = true
+    end
+    user_info = {
+      user: user,
+      new_user: new_user
+    }
   end
 
   def jwt_encode(payload) # generate JWT
