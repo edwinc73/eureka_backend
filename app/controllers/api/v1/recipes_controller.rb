@@ -168,7 +168,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     goal.current_fat = fat_meals.sum.round(1)
     goal.current_protein = protein_meals.sum.round(1)
     goal.current_carbs = carbs_meals.sum.round(1)
-    goal.current_calorie = calorie_meals.sum
+    goal.current_calorie = calorie_meals.sum.round
     goal.save
   end
 
