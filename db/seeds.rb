@@ -747,7 +747,7 @@ Badge.create!(name: "Badge Master", description: "Awarded to users who successfu
 Badge.create!(name: "Sugar-Free Champion", description: "Awarded to users who successfully reduce their intake of sugary foods and beverages.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Sugar_Free_Champion_dfr3tc.png")
 Badge.create!(name: "Plate Balancer", description: "Awarded to users who create well-balanced meals with a variety of nutrients.", badge_img:"https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Plate_Balancer_qvpcr9.png")
 Badge.create!(name: "Eureka Chef", description: " Awarded to users who create five new recipes.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Eureka_Chef_ex1a0r.png")
-Badge.create!(name: "Recipe Trailblazer", description: " Awarded to users who create their first recipe.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Eureka_Chef_ex1a0r.png")
+Badge.create!(name: "Recipe Trailblazer", description: " Awarded to users who create their first recipe.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1690345295/00274-20230726121459__revAnimated_v122_p1899o.png")
 
 
 Badge.first(4).each do |badge|

@@ -35,7 +35,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
         message: 'Recipe create successfully',
         nutrition_expert_and_badge_master: nutrition_expert,
         plate_balancer_and_badge_master: plate_balancer,
-        recipe_trailblazer: rt,
+        recipe_trailblazer_and_badge_master: rt,
         eureka_chef_and_badge_master: ec,
         recipe_id: @recipe.id
       }
