@@ -1,13 +1,17 @@
 class Api::V1::MealsController < Api::V1::BaseController
+  before_action :set_meal, only: %i[show destroy]
   def index
-    current_goal = User.last.goals.last # @current_user.goals.last
+    current_goal = @current_user.goals.last
     @meals = current_goal.meals
     render json: @meals, each_serializer: MealSerializer
   end
 
+  def show
+    render json: @meal, serializer: MealSerializer
+  end
+
   def destroy
-    meal = Meal.find(params[:id])
-    meal.destroy
+    @meal.destroy
     render json: { message: "Meal removed from today's goal" }
     update_goal
   end
@@ -15,8 +19,7 @@ class Api::V1::MealsController < Api::V1::BaseController
   private
 
   def update_goal
-    #goal = @current_user.goals.last
-    goal = User.last.goals.last
+    goal = @current_user.goals.last
     calorie_meals = goal.meals.map do |meal|
       meal.recipe.total_calories / meal.recipe.portion * meal.portion
     end
@@ -30,4 +33,7 @@ class Api::V1::MealsController < Api::V1::BaseController
     goal.save
   end
 
+  def set_meal
+    @meal = Meal.find(params[:id])
+  end
 end
