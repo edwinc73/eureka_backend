@@ -22,23 +22,22 @@ class Api::V1::RecipesController < Api::V1::BaseController
   def create
     @recipe = Recipe.new(recipe_params)
     @recipe.created_by_id = @current_user.id
-    nutrition_expert = "0"
-    plate_balancer = "0"
-    ec = "0"
     if params[:ingredients].present?
       create_preps(@recipe)
       update_data(@recipe)
-      #nutrition_expert = nutrition_expert(@recipe)
+      nutrition_expert = nutrition_expert(@recipe)
       plate_balancer = plate_balancer(@recipe)
     end
     if @recipe.save
+      rt = recipe_trailblazer
       ec = eureka_chef
       render json: {
         message: 'Recipe create successfully',
         nutrition_expert_and_badge_master: nutrition_expert,
         plate_balancer_and_badge_master: plate_balancer,
+        recipe_trailblazer_and_badge_master: rt,
         eureka_chef_and_badge_master: ec,
-        recipe_id: @recipe.id,
+        recipe_id: @recipe.id
       }
     else
       render json: { errors: @recipe.errors.full_messages }, status: :unprocessable_entity
@@ -91,12 +90,12 @@ class Api::V1::RecipesController < Api::V1::BaseController
     goal = user.goals.last
     meal = Meal.new(meal_params.merge(goal: goal, recipe: @recipe))
     if meal.save
-      render json: { message: "Meal added successfully" }
+      carbo_king = carbo_king(user, meal)
+      update_goal
+      render json: { message: "Meal added successfully", carbo_king: carbo_king }
     else
       render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
     end
-    update_goal
-    carbo_king(user, meal)
   end
 
   private
@@ -197,7 +196,6 @@ class Api::V1::RecipesController < Api::V1::BaseController
       if meal.recipe.carbs >= 150
         badge = Badge.find_by(name: "Carbo King")
         Achievement.create(user: user, badge: badge)
-        achieve = "1"
         achieve = badge_master(user)
         return achieve
       else
@@ -218,7 +216,6 @@ class Api::V1::RecipesController < Api::V1::BaseController
         (25..30).include?(nutrition[:fiber])
         badge = Badge.find_by(name: "Nutrition Expert")
         Achievement.create(user: user, badge: badge)
-        achieve = "1"
         achieve = badge_master(user)
         return achieve
       else
@@ -248,7 +245,6 @@ class Api::V1::RecipesController < Api::V1::BaseController
       if recipe.fat? && recipe.protein? && recipe.carbs? && recipe.fiber? && recipe.sodium?
         badge = Badge.find_by(name: "Plate Balancer")
         Achievement.create(user: user, badge: badge)
-        achieve = "1"
         achieve = badge_master(user)
         return achieve
       else
@@ -259,6 +255,23 @@ class Api::V1::RecipesController < Api::V1::BaseController
     end
   end
 
+  def recipe_trailblazer
+    user = @current_user
+    if user.badges.count { |x| x.name == "Recipe Trailblazer" } == 0
+      id = user.id
+      if Recipe.all.count { |r| r.created_by_id == id } == 1
+        badge = Badge.find_by(name: "Recipe Trailblazer")
+        Achievement.create(user: user, badge: badge)
+        achieve = badge_master(user)
+        return achieve
+      else
+        return "0"
+      end
+    else
+      "0"
+    end
+  end
+
   def eureka_chef
     user = @current_user
     if user.badges.count { |x| x.name == "Eureka Chef" } == 0
@@ -266,7 +279,6 @@ class Api::V1::RecipesController < Api::V1::BaseController
       if Recipe.all.count { |r| r.created_by_id == id } == 5
         badge = Badge.find_by(name: "Eureka Chef")
         Achievement.create(user: user, badge: badge)
-        achieve = "1"
         achieve = badge_master(user)
         return achieve
       else
