@@ -1,4 +1,5 @@
 class Api::V1::RecipesController < Api::V1::BaseController
+  skip_before_action :verify_request
   before_action :set_recipe, only: %i[show update upload_img add_review add_to_goal]
   def index
     # params[:query] = "salad"
