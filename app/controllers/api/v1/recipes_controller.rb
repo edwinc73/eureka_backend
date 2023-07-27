@@ -17,7 +17,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     if @recipe.preps.present? && @recipe.seed_data?
       update_data(@recipe)
     end
-    render json: @recipe, serializer: RecipeSerializer, show: true
+    render json: @recipe, serializer: RecipeSerializer, show: true, scope: @current_user
   end
 
   def create
