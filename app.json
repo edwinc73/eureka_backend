@@ -2,7 +2,7 @@
   "name": "eureka",
   "scripts": {
     "dokku": {
-      "predeploy": "bundle exec rake assets:precompile",
+      "predeploy": "RAILS_ENV=production bundle exec rake assets:precompile bundle exec rake assets:precompile",
       "postdeploy": "bundle exec rake db:migrate"
     }
   }
