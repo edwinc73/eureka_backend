@@ -25,5 +25,3 @@ ENV RACK_ENV production
 
 # Execute the Procfile
 CMD ["bin/run-dev.sh"]
-CMD ["redis-server"]
-CMD ["rails", "server", "-b", "0.0.0.0"]
