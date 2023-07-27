@@ -33,8 +33,6 @@ gem 'active_model_serializers'
 gem 'pundit'
 gem 'sidekiq'
 gem 'sidekiq-cron'
-gem 'sidekiq-failures', '~> 1.0'
-
 
 
 # Use Redis adapter to run Action Cable in production
