@@ -9,7 +9,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     else
       @recipes = Recipe.all
     end
-    render json: @recipes, each_serializer: RecipeSerializer
+    render json: @recipes, each_serializer: RecipeSerializer, scope: @current_user
   end
 
   def show

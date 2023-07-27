@@ -146,8 +146,6 @@ class RecipeSerializer < ActiveModel::Serializer
 
   def is_made_by_current_user
     user = scope
-    p user
-    p object.created_by_id
     current_user_id = user.id
     object.created_by_id == current_user_id
   end
