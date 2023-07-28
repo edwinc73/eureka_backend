@@ -2,7 +2,7 @@ class Api::V1::FavouriteRecipesController < Api::V1::BaseController
   def index
     user = @current_user
     @favorite_recipes = user.recipes
-    render json: @favorite_recipes, each_serializer: RecipeSerializer
+    render json: @favorite_recipes, each_serializer: RecipeSerializer, scope: @current_user
   end
 
   def create
