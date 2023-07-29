@@ -3,10 +3,10 @@ class MealSerializer < ActiveModel::Serializer
   belongs_to :goal
 
   def recipe_img
-    if object.photos.attached?
-      object.photos.url
+    if object.recipe.photos.attached?
+      object.recipe.photos.url
     else
-      object.photo
+      object.recipe.photo
     end
   end
 
