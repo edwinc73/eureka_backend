@@ -33,5 +33,4 @@ class MealSerializer < ActiveModel::Serializer
       sodium: (recipe.sodium / recipe.portion).round
     }
   end
-
 end
