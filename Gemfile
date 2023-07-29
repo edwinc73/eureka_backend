@@ -30,7 +30,8 @@ gem "faker"
 gem 'open-uri'
 gem 'active_model_serializers'
 gem 'sidekiq'
-gem 'sidekiq-cron'
+# gem 'sidekiq-cron'
+gem 'sidekiq-scheduler'
 gem 'activestorage-aliyun'
 gem 'image_processing'
 

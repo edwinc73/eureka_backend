@@ -1,11 +1,11 @@
 create_goals_job:
-  cron: "22 10 * * *"
+  cron: "43 10 * * *"
   class: "CreateGoalsJob"
   queue: default
   args: []
 
 check_badge_job:
-  cron: "21 10 * * *"
+  cron: "42 10 * * *"
   class: "CheckBadgeJob"
   queue: default
   args: []
