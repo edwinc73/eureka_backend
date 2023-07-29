@@ -22,14 +22,25 @@ class RecipeSerializer < ActiveModel::Serializer
 
   def reviews
     object.reviews.order(created_at: :desc).map do |review|
-      {
-        user: review.username,
-        user_img: review.user.image,
-        rating: review.rating,
-        content: review.content,
-        created_at: review.created_at.strftime("%Y-%m-%d"),
-        updated_at: review.created_at.strftime("%Y-%m-%d")
-      }
+      if review.user.avatar.attached?
+        {
+          user: review.username,
+          user_img: review.user.avatar.url,
+          rating: review.rating,
+          content: review.content,
+          created_at: review.created_at.strftime("%Y-%m-%d"),
+          updated_at: review.created_at.strftime("%Y-%m-%d")
+        }
+      else
+        {
+          user: review.username,
+          user_img: review.user.image,
+          rating: review.rating,
+          content: review.content,
+          created_at: review.created_at.strftime("%Y-%m-%d"),
+          updated_at: review.created_at.strftime("%Y-%m-%d")
+        }
+      end
     end
   end
 
@@ -149,5 +160,4 @@ class RecipeSerializer < ActiveModel::Serializer
     current_user_id = user.id
     object.created_by_id == current_user_id
   end
-
 end
