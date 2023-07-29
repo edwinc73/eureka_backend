@@ -3,10 +3,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
 
   def login
     user = find_user
-    p "____find_user________"
-    p user
     token = jwt_encode(user_id: user.id) # put user_id in payload
-    p token
     if user.username.present? &&
       user.age.present? &&
       user.weight.present? &&
