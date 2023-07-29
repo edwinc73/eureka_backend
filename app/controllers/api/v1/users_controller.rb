@@ -46,7 +46,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def upload_avatar
     user = @current_user
-    image = params[:avatarUrl]
+    image = params[:avatar]
     p "-------get form fe-------"
     p image
     user.avatar.attach(image)
