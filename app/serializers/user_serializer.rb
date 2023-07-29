@@ -20,14 +20,17 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def badges
-    object.achievements.map do |a|
-      {
-        id: a.badge.id,
-        name: a.badge.name,
-        image: a.badge.badge_img,
-        description: a.badge.description,
-        gain_badge_date: a.created_at.strftime('%Y/%m/%d')
-      }
+    if object.achievements.present?
+      object.achievements.map do |a|
+        {
+          id: a.badge.id,
+          name: a.badge.name,
+          image: a.badge.badge_img,
+          description: a.badge.description,
+          gain_badge_date: a.created_at.strftime('%Y/%m/%d')
+        }
+    else
+      nil
     end
   end
 
