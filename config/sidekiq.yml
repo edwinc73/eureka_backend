@@ -6,3 +6,15 @@
   - mailers
   - active_storage_analysis
   - active_storage_purge
+
+create_goals_job:
+  cron: "32 10 * * *"
+  class: "CreateGoalsJob"
+  queue: default
+  args: []
+
+check_badge_job:
+  cron: "31 10 * * *"
+  class: "CheckBadgeJob"
+  queue: default
+  args: []
