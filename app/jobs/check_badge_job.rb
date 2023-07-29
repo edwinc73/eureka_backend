@@ -1,5 +1,6 @@
 class CheckBadgeJob < ApplicationJob
   queue_as :default
+  include Sidekiq::Worker
 
   def perform
     User.all.each do |user|
