@@ -27,18 +27,19 @@ class Api::V1::RecipesController < Api::V1::BaseController
     if params[:ingredients].present?
       create_preps(@recipe)
       update_data(@recipe)
-      nutrition_expert = nutrition_expert(@recipe)
-      plate_balancer = plate_balancer(@recipe)
+      # nutrition_expert = nutrition_expert(@recipe)
+      # plate_balancer = plate_balancer(@recipe)
     end
     if @recipe.save
       rt = recipe_trailblazer
-      ec = eureka_chef
+      # ec = eureka_chef
       render json: {
         message: 'Recipe create successfully',
-        nutrition_expert_and_badge_master: nutrition_expert,
-        plate_balancer_and_badge_master: plate_balancer,
-        recipe_trailblazer_and_badge_master: rt,
-        eureka_chef_and_badge_master: ec,
+        # nutrition_expert_and_badge_master: nutrition_expert,
+        # plate_balancer_and_badge_master: plate_balancer,
+        # recipe_trailblazer_and_badge_master: rt,
+        recipe_trailblazer: rt,
+        # eureka_chef_and_badge_master: ec,
         recipe_id: @recipe.id
       }
     else
@@ -92,9 +93,11 @@ class Api::V1::RecipesController < Api::V1::BaseController
     goal = user.goals.last
     meal = Meal.new(meal_params.merge(goal: goal, recipe: @recipe))
     if meal.save
-      carbo_king = carbo_king(user, meal)
+      # carbo_king = carbo_king(user, meal)
       update_goal
-      render json: { message: "Meal added successfully", carbo_king: carbo_king }
+      # render json: { message: "Meal added successfully", carbo_king: carbo_king }
+      render json: { message: "Meal added successfully"}
+
     else
       render json: { error: meal.errors.full_messages }, status: :unprocessable_entity
     end
@@ -193,69 +196,69 @@ class Api::V1::RecipesController < Api::V1::BaseController
     end
   end
 
-  def carbo_king(user, meal)
-    if user.badges.count { |x| x.name == "Carbo King"} == 0
-      if meal.recipe.carbs >= 150
-        badge = Badge.find_by(name: "Carbo King")
-        Achievement.create(user: user, badge: badge)
-        achieve = badge_master(user)
-        return achieve
-      else
-        return "0"
-      end
-    else
-      return "0"
-    end
-  end
+  # def carbo_king(user, meal)
+  #   if user.badges.count { |x| x.name == "Carbo King"} == 0
+  #     if meal.recipe.carbs >= 150
+  #       badge = Badge.find_by(name: "Carbo King")
+  #       Achievement.create(user: user, badge: badge)
+  #       achieve = badge_master(user)
+  #       return achieve
+  #     else
+  #       return "0"
+  #     end
+  #   else
+  #     return "0"
+  #   end
+  # end
 
-  def nutrition_expert(recipe)
-    user = @current_user
-    if user.badges.count { |x| x.name == "Nutrition Expert" } == 0
-      nutrient_ratio(recipe)
-      if (0.45..0.60).include?(nutrition[:carbs]) &&
-        (0.25..0.45).include?(nutrition[:protein]) &&
-        (0.15..0.25).include?(nutrition[:fat])&&
-        (25..30).include?(nutrition[:fiber])
-        badge = Badge.find_by(name: "Nutrition Expert")
-        Achievement.create(user: user, badge: badge)
-        achieve = badge_master(user)
-        return achieve
-      else
-        return "0"
-      end
-    else
-      return "0"
-    end
-  end
+  # def nutrition_expert(recipe)
+  #   user = @current_user
+  #   if user.badges.count { |x| x.name == "Nutrition Expert" } == 0
+  #     nutrient_ratio(recipe)
+  #     if (0.45..0.60).include?(nutrition[:carbs]) &&
+  #       (0.25..0.45).include?(nutrition[:protein]) &&
+  #       (0.15..0.25).include?(nutrition[:fat])&&
+  #       (25..30).include?(nutrition[:fiber])
+  #       badge = Badge.find_by(name: "Nutrition Expert")
+  #       Achievement.create(user: user, badge: badge)
+  #       achieve = badge_master(user)
+  #       return achieve
+  #     else
+  #       return "0"
+  #     end
+  #   else
+  #     return "0"
+  #   end
+  # end
 
-  def nutrient_ratio(recipe)
-    protein = recipe.protein * 4 / recipe.total_calories
-    fat = recipe.fat * 9 / recipe.total_calories
-    carbs = recipe.carbs * 4 / recipe.total_calories
-    fiber = recipe.fiber
-    nutrition = {
-      protein: protein,
-      fat: fat,
-      carbs: carbs,
-      fiber: fiber
-    }
-  end
+  # def nutrient_ratio(recipe)
+  #   protein = recipe.protein * 4 / recipe.total_calories
+  #   fat = recipe.fat * 9 / recipe.total_calories
+  #   carbs = recipe.carbs * 4 / recipe.total_calories
+  #   fiber = recipe.fiber
+  #   nutrition = {
+  #     protein: protein,
+  #     fat: fat,
+  #     carbs: carbs,
+  #     fiber: fiber
+  #   }
+  # end
 
-  def plate_balancer(recipe)
-    user = @current_user
-    if user.badges.count { |x| x.name == "Plate Balancer"} == 0
-      if recipe.fat? && recipe.protein? && recipe.carbs? && recipe.fiber? && recipe.sodium?
-        badge = Badge.find_by(name: "Plate Balancer")
-        Achievement.create(user: user, badge: badge)
-        achieve = badge_master(user)
-        return achieve
-      else
-        return "0"
-      end
-    else
-      return "0"
-    end
-  end
+  # def plate_balancer(recipe)
+  #   user = @current_user
+  #   if user.badges.count { |x| x.name == "Plate Balancer"} == 0
+  #     if recipe.fat? && recipe.protein? && recipe.carbs? && recipe.fiber? && recipe.sodium?
+  #       badge = Badge.find_by(name: "Plate Balancer")
+  #       Achievement.create(user: user, badge: badge)
+  #       achieve = badge_master(user)
+  #       return achieve
+  #     else
+  #       return "0"
+  #     end
+  #   else
+  #     return "0"
+  #   end
+  # end
 
   def recipe_trailblazer
     user = @current_user
@@ -263,46 +266,46 @@ class Api::V1::RecipesController < Api::V1::BaseController
       id = user.id
       if Recipe.all.count { |r| r.created_by_id == id } == 1
         badge = Badge.find_by(name: "Recipe Trailblazer")
-        Achievement.create(user: user, badge: badge)
-        achieve = badge_master(user)
-        return achieve
+        achievement = Achievement.create!(user: user, badge: badge)
+        # achieve = badge_master(user)
+        return badge
       else
-        return "0"
+        return false
       end
     else
-      "0"
+      return false
     end
   end
 
-  def eureka_chef
-    user = @current_user
-    if user.badges.count { |x| x.name == "Eureka Chef" } == 0
-      id = user.id
-      if Recipe.all.count { |r| r.created_by_id == id } == 5
-        badge = Badge.find_by(name: "Eureka Chef")
-        Achievement.create(user: user, badge: badge)
-        achieve = badge_master(user)
-        return achieve
-      else
-        return "0"
-      end
-    else
-      return "0"
-    end
-  end
+  # def eureka_chef
+  #   user = @current_user
+  #   if user.badges.count { |x| x.name == "Eureka Chef" } == 0
+  #     id = user.id
+  #     if Recipe.all.count { |r| r.created_by_id == id } == 5
+  #       badge = Badge.find_by(name: "Eureka Chef")
+  #       Achievement.create(user: user, badge: badge)
+  #       achieve = badge_master(user)
+  #       return achieve
+  #     else
+  #       return "0"
+  #     end
+  #   else
+  #     return "0"
+  #   end
+  # end
 
-  def badge_master(user)
-    if user.badges.count { |x| x.name == "Badge Master" } == 0
-      if user.badges.count == 5
-        badge = Badge.find_by(name: "Badge Master")
-        Achievement.create(user: user, badge: badge)
-        return "2"
-      else
-        return "1"
-      end
-    else
-      return "1"
-    end
-  end
+  # def badge_master(user)
+  #   if user.badges.count { |x| x.name == "Badge Master" } == 0
+  #     if user.badges.count == 5
+  #       badge = Badge.find_by(name: "Badge Master")
+  #       Achievement.create(user: user, badge: badge)
+  #       return "2"
+  #     else
+  #       return "1"
+  #     end
+  #   else
+  #     return "1"
+  #   end
+  # end
 
 end
