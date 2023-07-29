@@ -32,7 +32,8 @@ gem 'open-uri'
 gem 'active_model_serializers'
 gem 'sidekiq'
 gem 'sidekiq-cron'
-
+gem 'activestorage-aliyun'
+gem 'image_processing'
 
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
