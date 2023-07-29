@@ -22,6 +22,7 @@ class Api::V1::BaseController < ActionController::Base
 
   def verify_request
     token = get_jwt_token
+    p token
     if token.present?
       data = jwt_decode(token)
       puts "----data #{data}"

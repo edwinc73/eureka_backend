@@ -9,6 +9,20 @@ class Api::V1::UsersController < Api::V1::BaseController
     user.update(user_params)
     create_goal_for_new_user(user)
     if user.save
+      bmr = calculate_bmr(user)
+      user_target = user.goal_weight - user.weight
+      goal = calculate_calorie_goal(bmr, user_target)
+      Goal.create!(
+        user: user,
+        calorie_goal: goal[:calories],
+        current_calorie: 0,
+        fat_goal: goal[:fat],
+        protein_goal: goal[:protein],
+        carbs_goal: goal[:carbs],
+        current_fat: 0,
+        current_protein: 0,
+        current_carbs: 0
+      )
       render json: { msg: 'fill up profile and create a new goal' }
     else
       render_error
