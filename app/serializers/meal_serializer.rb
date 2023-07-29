@@ -1,6 +1,14 @@
 class MealSerializer < ActiveModel::Serializer
-  attributes :id, :name, :portion, :meal_nutritious, :recipe, :recipe_nutritious_per_100g
+  attributes :id, :name, :portion, :meal_nutritious, :recipe, :recipe_img, :recipe_nutritious_per_100g
   belongs_to :goal
+
+  def recipe_img
+    if object.recipe.photos.attached?
+      object.recipe.photos.url
+    else
+      object.recipe.photo
+    end
+  end
 
   def meal_nutritious
     recipe = object.recipe
