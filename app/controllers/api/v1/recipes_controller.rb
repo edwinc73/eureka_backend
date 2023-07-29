@@ -1,6 +1,6 @@
 class Api::V1::RecipesController < Api::V1::BaseController
   before_action :set_recipe, only: %i[show update upload_img add_review add_to_goal]
-  skip_before_action :verify_request
+  # skip_before_action :verify_request
 
   def index
     # params[:query] = "salad"
@@ -10,7 +10,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
     else
       @recipes = Recipe.all
     end
-    render json: @recipes, each_serializer: RecipeSerializer, scope: User.last
+    render json: @recipes, each_serializer: RecipeSerializer, scope: @current_user
   end
 
   def show
