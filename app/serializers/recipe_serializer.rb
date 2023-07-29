@@ -5,7 +5,7 @@ class RecipeSerializer < ActiveModel::Serializer
 
   def photos
     if object.photos.attached?
-      object.photos.map { |photo| photo.url }
+      object.photos.url
     else
       object.photo
     end
