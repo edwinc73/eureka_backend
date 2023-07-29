@@ -268,7 +268,13 @@ class Api::V1::RecipesController < Api::V1::BaseController
         badge = Badge.find_by(name: "Recipe Trailblazer")
         achievement = Achievement.create!(user: user, badge: badge)
         # achieve = badge_master(user)
-        return badge
+       return {
+          id: achievement.badge.id,
+          name: achievement.badge.name,
+          image: achievement.badge.badge_img,
+          description: achievement.badge.description,
+          gain_badge_date: achievement.created_at.strftime('%Y/%m/%d')
+        }
       else
         return false
       end
