@@ -29,6 +29,7 @@ class UserSerializer < ActiveModel::Serializer
           description: a.badge.description,
           gain_badge_date: a.created_at.strftime('%Y/%m/%d')
         }
+      end
     else
       nil
     end
