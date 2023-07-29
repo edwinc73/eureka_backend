@@ -284,34 +284,34 @@ class Api::V1::RecipesController < Api::V1::BaseController
   end
 
   # def eureka_chef
-  #   user = @current_user
-  #   if user.badges.count { |x| x.name == "Eureka Chef" } == 0
-  #     id = user.id
-  #     if Recipe.all.count { |r| r.created_by_id == id } == 5
-  #       badge = Badge.find_by(name: "Eureka Chef")
-  #       Achievement.create(user: user, badge: badge)
-  #       achieve = badge_master(user)
-  #       return achieve
-  #     else
-  #       return "0"
-  #     end
-  #   else
-  #     return "0"
-  #   end
+    # user = @current_user
+    # if user.badges.count { |x| x.name == "Eureka Chef" } == 0
+      # id = user.id
+      # if Recipe.all.count { |r| r.created_by_id == id } == 5
+        # badge = Badge.find_by(name: "Eureka Chef")
+        # Achievement.create(user: user, badge: badge)
+        # achieve = badge_master(user)
+        # return achieve
+      # else
+        # return "0"
+      # end
+    # else
+      # return "0"
+    # end
   # end
 
   # def badge_master(user)
-  #   if user.badges.count { |x| x.name == "Badge Master" } == 0
-  #     if user.badges.count == 5
-  #       badge = Badge.find_by(name: "Badge Master")
-  #       Achievement.create(user: user, badge: badge)
-  #       return "2"
-  #     else
-  #       return "1"
-  #     end
-  #   else
-  #     return "1"
-  #   end
+    # if user.badges.count { |x| x.name == "Badge Master" } == 0
+      # if user.badges.count == 5
+        # badge = Badge.find_by(name: "Badge Master")
+        # Achievement.create(user: user, badge: badge)
+        # return "2"
+      # else
+        # return "1"
+      # end
+    # else
+      # return "1"
+    # end
   # end
 
 end
