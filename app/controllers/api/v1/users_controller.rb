@@ -47,7 +47,10 @@ class Api::V1::UsersController < Api::V1::BaseController
   def upload_avatar
     user = @current_user
     image = params[:avatarUrl]
+    p image
     user.avatar.attach(image)
+    p user.avatar.url
+
     if user.save
       render json: { message: 'Image uploaded successfully' }
     else
