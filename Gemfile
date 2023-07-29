@@ -26,7 +26,6 @@ gem "puma", "~> 5.0"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-gem "cloudinary"
 gem "faker"
 gem 'open-uri'
 gem 'active_model_serializers'
