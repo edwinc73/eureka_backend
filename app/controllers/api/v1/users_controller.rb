@@ -47,8 +47,10 @@ class Api::V1::UsersController < Api::V1::BaseController
   def upload_avatar
     user = @current_user
     image = params[:avatarUrl]
+    p "-------get form fe-------"
     p image
     user.avatar.attach(image)
+    p "--------get from cloudy"
     p user.avatar.url
 
     if user.save
