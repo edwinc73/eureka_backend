@@ -8,13 +8,13 @@
   - active_storage_purge
 
 create_goals_job:
-  cron: "32 10 * * *"
+  cron: " 00 16 * * *"
   class: "CreateGoalsJob"
   queue: default
   args: []
 
 check_badge_job:
-  cron: "31 10 * * *"
+  cron: "58 15 * * *"
   class: "CheckBadgeJob"
   queue: default
   args: []

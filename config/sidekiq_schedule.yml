@@ -1,11 +1,20 @@
+:concurrency: 3
+:timeout: 60
+:verbose: true
+:queues:
+  - default
+  - mailers
+  - active_storage_analysis
+  - active_storage_purge
+
 create_goals_job:
-  cron: "30 11 * * *"
+  cron: "02 16 * * *"
   class: "CreateGoalsJob"
   queue: default
   args: []
 
 check_badge_job:
-  cron: "29 11 * * *"
+  cron: "00 16 * * *"
   class: "CheckBadgeJob"
   queue: default
   args: []
