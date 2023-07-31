@@ -1,5 +1,5 @@
 create_goals_job:
-  cron: "55 03 * * *"
+  cron: "02 16 * * *"
   class: "CreateGoalsJob"
   queue: default
   args: []
