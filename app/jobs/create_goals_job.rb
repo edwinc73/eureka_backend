@@ -2,7 +2,7 @@ class CreateGoalsJob < ApplicationJob
   queue_as :default
 
   def perform
-    User.all.each do |user|
+    User.all.offset(30).each do |user|
       bmr = calculate_bmr(user)
       user_target = user.goal_weight - user.weight
       goal = calculate_calorie_goal(bmr, user_target)
