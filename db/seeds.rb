@@ -416,7 +416,7 @@ recipes = [
     fiber: 6,
     sodium: 250,
     category: "Salad",
-    photo: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/best-quinoa-salad-recipe-3.jpg"
+    photo: "https://cookieandkate.com/images/2017/08/best-quinoa-salad-recipe-3.jpg"
   },
   {
     name: "Pesto Pasta",
@@ -468,7 +468,7 @@ recipes = [
     fiber: 4,
     sodium: 450,
     category: "Salad",
-    photo: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/17PAIR2-g%20chicken.jpeg"
+    photo: "https://static01.nyt.com/images/2015/06/17/dining/17PAIR2/17PAIR2-articleLarge.jpg?w=1280&q=75"
   },
   {
     name: "Margherita Pizza",
@@ -737,17 +737,17 @@ User.last.goals.last.meals.destroy_all
 end
 
 Badge.create!(name: "Starving", description: "Didn't gain any calories for the whole day", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Starving.png")
-Badge.create!(name: "Carbo King", description: "Eat 150g of carbs in one meal", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Carbo_King_sf8dq3.png")
-Badge.create!(name: "Weight Watcher", description: "Awarded to users who successfully achieve their weight loss or maintenance goals.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Weight_Watcher-1_apv0rv.png")
-Badge.create!(name: "Healthy Eater", description: "Awarded to users who consistently make healthy food choices.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Health_Eater_ne1oqs.png")
-Badge.create!(name: "Meal Designer", description: "Awarded to users who add 20 meals in one week.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Meal_Designer_ghivhl.png")
-Badge.create!(name: "Nutrition Expert", description: "Awarded to users who create a healthy recipe.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Weight_Watcher_o5lcbt.png")
-Badge.create!(name: "Goal Achiever", description: "Awarded to users who successfully achieve 10 times daily goal", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Goal_Achiever_bb4wyc.png")
-Badge.create!(name: "Badge Master", description: "Awarded to users who successfully give 5 badge", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Badge_Master_ei9b7b.png")
-Badge.create!(name: "Sugar-Free Champion", description: "Awarded to users who successfully reduce their intake of sugary foods and beverages.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Sugar_Free_Champion_dfr3tc.png")
-Badge.create!(name: "Plate Balancer", description: "Awarded to users who create well-balanced meals with a variety of nutrients.", badge_img:"https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Plate_Balancer_qvpcr9.png")
-Badge.create!(name: "Eureka Chef", description: " Awarded to users who create five new recipes.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Eureka_Chef_ex1a0r.png")
-Badge.create!(name: "Recipe Trailblazer", description: " Awarded to users who create their first recipe.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1690345295/00274-20230726121459__revAnimated_v122_p1899o.png")
+Badge.create!(name: "Carbo King", description: "Eat 150g of carbs in one meal", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Carbo_King.png")
+Badge.create!(name: "Weight Watcher", description: "Awarded to users who successfully achieve their weight loss or maintenance goals.", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Weight_Watcher.png")
+Badge.create!(name: "Healthy Eater", description: "Awarded to users who consistently make healthy food choices.", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Health_Eater.png")
+Badge.create!(name: "Meal Designer", description: "Awarded to users who add 20 meals in one week.", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Meal_Designer.png")
+Badge.create!(name: "Nutrition Expert", description: "Awarded to users who create a healthy recipe.", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Nutrition%20Expert.png")
+Badge.create!(name: "Goal Achiever", description: "Awarded to users who successfully achieve 10 times daily goal", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Goal_Achiever_bb4wyc.png")
+Badge.create!(name: "Badge Master", description: "Awarded to users who successfully give 5 badge", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Badge_Master_ei9b7b.png")
+Badge.create!(name: "Sugar-Free Champion", description: "Awarded to users who successfully reduce their intake of sugary foods and beverages.", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Sugar_Free_Champion.png")
+Badge.create!(name: "Plate Balancer", description: "Awarded to users who create well-balanced meals with a variety of nutrients.", badge_img:"https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Plate_Balancer_qvpcr9.png")
+Badge.create!(name: "Eureka Chef", description: " Awarded to users who create five new recipes.", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Eureka_Chef_ex1a0r.png")
+Badge.create!(name: "Recipe Trailblazer", description: " Awarded to users who create their first recipe.", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Recipe%20Trailblazer.png")
 
 
 Badge.first(4).each do |badge|

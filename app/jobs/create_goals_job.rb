@@ -35,26 +35,27 @@ class CreateGoalsJob < ApplicationJob
     fat = (bmr * 0.3) / 9
     protein = (bmr * 0.2) / 4
     carbs = (bmr * 0.5) / 4
+    calorie = bmr * 1.5
     if target <= 2 && target >= -2
       goal = {
         fat: fat.round(1),
         protein: protein.round(1),
         carbs: carbs.round(1),
-        calories: bmr
+        calories: calorie.round
       }
     elsif target > 2
       goal = {
         fat: (fat * 1.2).round(1),
         protein: (protein * 1.2).round(1),
         carbs: (carbs * 1.2).round(1),
-        calories: (bmr * 1.2).round
+        calories: (calorie * 1.2).round
       }
     else
       goal = {
         fat: (fat * 0.8).round(1),
         protein: (protein * 0.8).round(1),
         carbs: (carbs * 0.8).round(1),
-        calories: (bmr * 0.8).round
+        calories: (calorie * 0.8).round
       }
     end
     goal
