@@ -416,7 +416,7 @@ recipes = [
     fiber: 6,
     sodium: 250,
     category: "Salad",
-    photo: "https://cookieandkate.com/images/2017/08/best-quinoa-salad-recipe-3.jpg"
+    photo: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/best-quinoa-salad-recipe-3.jpg"
   },
   {
     name: "Pesto Pasta",
@@ -468,7 +468,7 @@ recipes = [
     fiber: 4,
     sodium: 450,
     category: "Salad",
-    photo: "https://static01.nyt.com/images/2015/06/17/dining/17PAIR2/17PAIR2-articleLarge.jpg?w=1280&q=75"
+    photo: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/17PAIR2-g%20chicken.jpeg"
   },
   {
     name: "Margherita Pizza",
@@ -481,7 +481,7 @@ recipes = [
     fiber: 2,
     sodium: 550,
     category: "Main Dish",
-    photo: "https://cookieandkate.com/images/2021/07/margherita-pizza-recipe-1-2-1097x1650.jpg"
+    photo: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/margherita-pizza-recipe-1-2-1097x1650.jpg"
   },
   {
     name: "Spinach and Feta Stuffed Chicken Breast",
@@ -736,7 +736,7 @@ User.last.goals.last.meals.destroy_all
   )
 end
 
-Badge.create!(name: "Starving", description: "Didn't gain any calories for the whole day", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Starving_c76vsc.png")
+Badge.create!(name: "Starving", description: "Didn't gain any calories for the whole day", badge_img: "https://eurekaaa.oss-cn-shanghai.aliyuncs.com/badge/Starving.png")
 Badge.create!(name: "Carbo King", description: "Eat 150g of carbs in one meal", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Carbo_King_sf8dq3.png")
 Badge.create!(name: "Weight Watcher", description: "Awarded to users who successfully achieve their weight loss or maintenance goals.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751690/Weight_Watcher-1_apv0rv.png")
 Badge.create!(name: "Healthy Eater", description: "Awarded to users who consistently make healthy food choices.", badge_img: "https://res.cloudinary.com/dj2vij3ty/image/upload/v1689751691/Health_Eater_ne1oqs.png")
