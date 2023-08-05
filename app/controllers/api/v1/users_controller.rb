@@ -117,7 +117,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     fat = (bmr * 0.3) / 9
     protein = (bmr * 0.2) / 4
     carbs = (bmr * 0.5) / 4
-    calorie = bmr * 1.5
+    calorie = bmr * 1.375
     if target <= 2 && target >= -2
       goal = {
         fat: fat.round(1),
